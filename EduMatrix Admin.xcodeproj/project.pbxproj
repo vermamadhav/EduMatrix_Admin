@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1768EFDE2C367030001403DD /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1768EFDD2C367030001403DD /* LogInView.swift */; };
+		1768EFE02C367117001403DD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1768EFDF2C367117001403DD /* HomeView.swift */; };
+		1768EFE22C367172001403DD /* RequestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1768EFE12C367172001403DD /* RequestsView.swift */; };
+		178156EE2C36B10000D3DE88 /* EducatorCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178156ED2C36B10000D3DE88 /* EducatorCardView.swift */; };
+		178156F02C36B12600D3DE88 /* CourseCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178156EF2C36B12600D3DE88 /* CourseCardView.swift */; };
+		178156F22C36C7BB00D3DE88 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178156F12C36C7BB00D3DE88 /* Course.swift */; };
+		178156F42C36C99D00D3DE88 /* CoursesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178156F32C36C99D00D3DE88 /* CoursesView.swift */; };
+		178156FC2C37139200D3DE88 /* EducatorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178156FB2C37139200D3DE88 /* EducatorModel.swift */; };
+		178156FE2C3713B100D3DE88 /* EducatorDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178156FD2C3713B100D3DE88 /* EducatorDetailView.swift */; };
+		178157002C3713E900D3DE88 /* EducatorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178156FF2C3713E900D3DE88 /* EducatorsView.swift */; };
+		178157022C3717FD00D3DE88 /* EducatorsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178157012C3717FD00D3DE88 /* EducatorsListView.swift */; };
 		A98806842C3564A1005D2F17 /* EduMatrix_AdminApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98806832C3564A1005D2F17 /* EduMatrix_AdminApp.swift */; };
 		A98806862C3564A1005D2F17 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98806852C3564A1005D2F17 /* ContentView.swift */; };
 		A98806882C3564A3005D2F17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A98806872C3564A3005D2F17 /* Assets.xcassets */; };
@@ -14,6 +25,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1768EFDD2C367030001403DD /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
+		1768EFDF2C367117001403DD /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		1768EFE12C367172001403DD /* RequestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsView.swift; sourceTree = "<group>"; };
+		178156ED2C36B10000D3DE88 /* EducatorCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducatorCardView.swift; sourceTree = "<group>"; };
+		178156EF2C36B12600D3DE88 /* CourseCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseCardView.swift; sourceTree = "<group>"; };
+		178156F12C36C7BB00D3DE88 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
+		178156F32C36C99D00D3DE88 /* CoursesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesView.swift; sourceTree = "<group>"; };
+		178156FB2C37139200D3DE88 /* EducatorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducatorModel.swift; sourceTree = "<group>"; };
+		178156FD2C3713B100D3DE88 /* EducatorDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducatorDetailView.swift; sourceTree = "<group>"; };
+		178156FF2C3713E900D3DE88 /* EducatorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducatorsView.swift; sourceTree = "<group>"; };
+		178157012C3717FD00D3DE88 /* EducatorsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducatorsListView.swift; sourceTree = "<group>"; };
 		A98806802C3564A1005D2F17 /* EduMatrix Admin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EduMatrix Admin.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A98806832C3564A1005D2F17 /* EduMatrix_AdminApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EduMatrix_AdminApp.swift; sourceTree = "<group>"; };
 		A98806852C3564A1005D2F17 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,6 +75,17 @@
 			children = (
 				A98806832C3564A1005D2F17 /* EduMatrix_AdminApp.swift */,
 				A98806852C3564A1005D2F17 /* ContentView.swift */,
+				1768EFDD2C367030001403DD /* LogInView.swift */,
+				1768EFDF2C367117001403DD /* HomeView.swift */,
+				1768EFE12C367172001403DD /* RequestsView.swift */,
+				178156ED2C36B10000D3DE88 /* EducatorCardView.swift */,
+				178157012C3717FD00D3DE88 /* EducatorsListView.swift */,
+				178156FF2C3713E900D3DE88 /* EducatorsView.swift */,
+				178156FB2C37139200D3DE88 /* EducatorModel.swift */,
+				178156FD2C3713B100D3DE88 /* EducatorDetailView.swift */,
+				178156EF2C36B12600D3DE88 /* CourseCardView.swift */,
+				178156F32C36C99D00D3DE88 /* CoursesView.swift */,
+				178156F12C36C7BB00D3DE88 /* Course.swift */,
 				A98806872C3564A3005D2F17 /* Assets.xcassets */,
 				A98806892C3564A3005D2F17 /* Preview Content */,
 			);
@@ -137,8 +170,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				178156F22C36C7BB00D3DE88 /* Course.swift in Sources */,
+				178156FE2C3713B100D3DE88 /* EducatorDetailView.swift in Sources */,
+				1768EFDE2C367030001403DD /* LogInView.swift in Sources */,
+				178157002C3713E900D3DE88 /* EducatorsView.swift in Sources */,
+				1768EFE22C367172001403DD /* RequestsView.swift in Sources */,
+				1768EFE02C367117001403DD /* HomeView.swift in Sources */,
+				178156FC2C37139200D3DE88 /* EducatorModel.swift in Sources */,
+				178156EE2C36B10000D3DE88 /* EducatorCardView.swift in Sources */,
 				A98806862C3564A1005D2F17 /* ContentView.swift in Sources */,
+				178156F02C36B12600D3DE88 /* CourseCardView.swift in Sources */,
 				A98806842C3564A1005D2F17 /* EduMatrix_AdminApp.swift in Sources */,
+				178157022C3717FD00D3DE88 /* EducatorsListView.swift in Sources */,
+				178156F42C36C99D00D3DE88 /* CoursesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
