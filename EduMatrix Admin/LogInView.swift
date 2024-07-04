@@ -11,7 +11,9 @@ struct LogInView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var isPasswordVisible: Bool = false
-    @State private var isSignIn: Bool = false // Track login status
+    @State private var isSignIn: Bool = false
+    @State private var forgotPassword: Bool = false
+    // Track login status
     
     var body: some View {
         NavigationView {
@@ -77,6 +79,7 @@ struct LogInView: View {
                     
                     Button(action: {
                         // Action for forgot password
+                        forgotPassword=true
                     }) {
                         Text("Forgot Password?")
                             .foregroundColor(.blue)
@@ -89,6 +92,10 @@ struct LogInView: View {
                 
                 NavigationLink(destination: ContentView()
                     .navigationBarBackButtonHidden(true), isActive: $isSignIn) {
+                        EmptyView()
+                    }
+                NavigationLink(destination: ForgotPasswordView()
+                    .navigationBarBackButtonHidden(true), isActive: $forgotPassword) {
                         EmptyView()
                     }
                 
