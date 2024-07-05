@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import FirebaseAuth
+import FirebaseFirestore
 
 struct EducatorCardView: View {
     var educator: Educator
@@ -36,11 +38,11 @@ struct EducatorCardView: View {
                         .lineLimit(2)
                         .multilineTextAlignment(.leading) // Ensure left alignment
                     
-                    Text(educator.skills)
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                        .lineLimit(3)
-                        .multilineTextAlignment(.leading) // Ensure left alignment
+//                    Text(educator.skills)
+//                        .font(.subheadline)
+//                        .foregroundColor(.secondary)
+//                        .lineLimit(3)
+//                        .multilineTextAlignment(.leading) // Ensure left alignment
                 }
                 
                 Spacer()
@@ -81,28 +83,38 @@ struct EducatorCardView: View {
     private func approveEducator() {
         // Handle approve action
         print("Approved \(educator.name)")
+        signUp(email: educator.email , password: "987654321", role: "educator")
     }
     
     private func rejectEducator() {
         // Handle reject action
         print("Rejected \(educator.name)")
     }
-}
-
-struct EducatorCardView_Previews: PreviewProvider {
-    static var previews: some View {
-        let educator = Educator(
-            name: "Alice Johnson",
-            email: "alice.johnson@example.com",
-            phone: "123-456-7890",
-            qualification: "PhD in Mathematics",
-            skills: "Calculus, Algebra, Statistics",
-            experience: "10 years",
-            subjects: "Mathematics",
-            languages: "English, Spanish",
-            adhaarCard: "1234-5678-9012",
-            about: "Passionate about teaching and research in Mathematics."
-        )
-        EducatorCardView(educator: educator)
+    
+    func signUp(email: String, password: String, role: String) {
+        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+            } else {
+                guard let userID = authResult?.user.uid else { return }
+                let db = Firestore.firestore()
+                db.collection("users").document(userID).setData([
+                    "email": email,
+                    "role": role
+                ]) { error in
+                    if let error = error {
+                        print("Error adding document: \(error)")
+                    } else {
+                        print("User signed up successfully with role: \(role)")
+                    }
+                }
+            }
+        }
     }
 }
+
+//struct EducatorCardView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        EducatorCardView(educator: educator)
+//    }
+//}

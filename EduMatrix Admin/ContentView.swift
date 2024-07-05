@@ -21,17 +21,6 @@ struct ContentView: View {
                 }
         }
     }
-    
-    func signIn(email: String, password: String) {
-        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-            if let error = error {
-                print("Error: \(error.localizedDescription)")
-            } else {
-                print("User signed in successfully")
-            }
-        }
-    }
-    
 }
 
 struct ContentView_Previews: PreviewProvider {

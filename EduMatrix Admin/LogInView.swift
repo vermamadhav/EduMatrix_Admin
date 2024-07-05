@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
+import FirebaseAuth
 
 struct LogInView: View {
     @State private var email: String = ""
@@ -101,7 +103,9 @@ struct LogInView: View {
                 
                 Button(action: {
                     // Action for login
-                    isSignIn = true
+                    isSignIn.toggle()
+//                    checkLoginCredentials(email: email, password: password, expectedRole: "admin")
+                    
                 }) {
                     Text("Sign In")
                         .foregroundColor(.white)
@@ -122,6 +126,39 @@ struct LogInView: View {
         }
         
     }
+    
+    func checkLoginCredentials(email: String, password: String, expectedRole: String) {
+        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+            } else {
+                guard let userID = authResult?.user.uid else { return }
+                let db = Firestore.firestore()
+                let docRef = db.collection("users").document(userID)
+                docRef.getDocument { (document, error) in
+                    if let document = document, document.exists {
+                        let data = document.data()
+                        let role = data?["role"] as? String
+                        if role == expectedRole {
+                            isSignIn.toggle()
+                            print("User signed in successfully with role: \(role ?? "")")
+                        } else {
+                            print("User role mismatch. Expected: \(expectedRole), Found: \(role ?? "")")
+                            // Sign out the user if the role does not match
+                            do {
+                                try Auth.auth().signOut()
+                            } catch let signOutError as NSError {
+                                print("Error signing out: \(signOutError)")
+                            }
+                        }
+                    } else {
+                        print("Document does not exist")
+                    }
+                }
+            }
+        }
+    }
+    
 }
 
 struct LogInView_Previews: PreviewProvider {
