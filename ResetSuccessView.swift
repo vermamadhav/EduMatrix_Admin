@@ -48,7 +48,7 @@ struct ResetSuccessView: View {
                     .padding(.horizontal, 4)
             }
 
-            NavigationLink(destination: LogInView(), isActive: $navigateToLoginView) {
+            NavigationLink(destination: LoginView(), isActive: $navigateToLoginView) {
                 EmptyView()
             }
 

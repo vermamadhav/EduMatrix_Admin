@@ -1,22 +1,20 @@
-//
-//  EducatorsView.swift
-//  EduMatrix Admin
-//
-//  Created by Ankit Rajput on 04/07/24.
-//
-
 import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
+import FirebaseStorage
 
 struct EducatorCardView: View {
     var educator: Educator
+    var onUpdate: (Educator) -> Void
+    @State private var profileImage: UIImage? = UIImage(named: "reload")
+    @State private var showAlertConfirm = false
+    @State private var showAlertReject = false
     
     var body: some View {
         NavigationLink(destination: EducatorDetailView(educator: educator)) {
             HStack(alignment: .center, spacing: 16) {
                 // Profile Picture
-                Image(systemName: "person.circle.fill")
+                Image(uiImage: profileImage!)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 60, height: 60)
@@ -37,12 +35,6 @@ struct EducatorCardView: View {
                         .foregroundColor(.secondary)
                         .lineLimit(2)
                         .multilineTextAlignment(.leading) // Ensure left alignment
-                    
-//                    Text(educator.skills)
-//                        .font(.subheadline)
-//                        .foregroundColor(.secondary)
-//                        .lineLimit(3)
-//                        .multilineTextAlignment(.leading) // Ensure left alignment
                 }
                 
                 Spacer()
@@ -51,7 +43,7 @@ struct EducatorCardView: View {
                 VStack(spacing: 8) {
                     Button(action: {
                         // Handle approve action
-                        approveEducator()
+                        showAlertConfirm = true
                     }) {
                         Text("Approve")
                             .frame(width: 85, height: 28)
@@ -59,16 +51,43 @@ struct EducatorCardView: View {
                             .foregroundColor(.white)
                             .cornerRadius(12)
                     }
-                    
+                    .alert(isPresented: $showAlertConfirm) {
+                        Alert(
+                            title: Text("Confirmation"),
+                            message: Text("Do you want to accept the educator onboarding request?"),
+                            primaryButton: .default(Text("Yes")) {
+                                print("Accepted")
+                                approveEducator()
+                            },
+                            secondaryButton: .cancel(Text("No"))
+                        )
+                    }
+
                     Button(action: {
                         // Handle reject action
-                        rejectEducator()
+                        showAlertReject = true
                     }) {
                         Text("Reject")
                             .frame(width: 85, height: 28)
                             .background(Color.red)
                             .foregroundColor(.white)
                             .cornerRadius(12)
+                    }
+                    .alert(isPresented: $showAlertReject) {
+                        Alert(
+                            title: Text("Rejection"),
+                            message: Text("Do you want to reject the educator onboarding request?"),
+                            primaryButton: .default(Text("Yes")) {
+                                print("Rejected")
+                                rejectEducator()
+                            },
+                            secondaryButton: .cancel(Text("No"))
+                        )
+                    }
+                }
+                .onAppear {
+                    Services.loadImage(from: URL(string: educator.profileImageURL)!) { image in
+                        self.profileImage = image
                     }
                 }
             }
@@ -80,41 +99,59 @@ struct EducatorCardView: View {
         }
     }
     
-    private func approveEducator() {
-        // Handle approve action
+    func approveEducator() {
         print("Approved \(educator.name)")
-        signUp(email: educator.email , password: "987654321", role: "educator")
-    }
-    
-    private func rejectEducator() {
-        // Handle reject action
-        print("Rejected \(educator.name)")
-    }
-    
-    func signUp(email: String, password: String, role: String) {
-        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+        let db = Firestore.firestore()
+        db.collection("educatorsRequests").document("\(educator.email)").delete()
+        onUpdate(educator)
+        
+        Auth.auth().createUser(withEmail: educator.email, password: "987654321") { authResult, error in
             if let error = error {
                 print("Error: \(error.localizedDescription)")
             } else {
-                guard let userID = authResult?.user.uid else { return }
+                // guard let userID = authResult?.user.uid else { return }
                 let db = Firestore.firestore()
-                db.collection("users").document(userID).setData([
-                    "email": email,
-                    "role": role
-                ]) { error in
+                db.collection("educators").document(educator.email).setData(educator.toDictionary()) { error in
                     if let error = error {
                         print("Error adding document: \(error)")
                     } else {
-                        print("User signed up successfully with role: \(role)")
+                        print("User signed up successfully")
                     }
                 }
             }
         }
     }
+    
+    func rejectEducator() {
+        print("Rejected \(educator.name)")
+        let db = Firestore.firestore()
+        db.collection("educatorsRequests").document("\(educator.email)").delete()
+        onUpdate(educator)
+
+        db.collection("rejectedEducators").document(educator.email).setData(educator.toDictionary()) { error in
+            if let error = error {
+                print("Error adding document \(error)")
+            } else {
+                print("Educator added in the Rejected List")
+            }
+        }
+    }
 }
 
-//struct EducatorCardView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        EducatorCardView(educator: educator)
-//    }
-//}
+struct EducatorCardView_Previews: PreviewProvider {
+    static var previews: some View {
+        let educator = Educator(
+            name: "Alice Johnson",
+            email: "alice.johnson@example.com",
+            mobileNumber: "123-456-7890",
+            qualification: "PhD in Mathematics",
+            experience: "10 years",
+            subjectDomain: "Mathematics",
+            language: "English, Spanish",
+            aadharImageURL: "jdfhlsiear",
+            profileImageURL: "sfksl",
+            about: "Passionate about teaching and research in Mathematics."
+        )
+        EducatorCardView(educator: educator, onUpdate: { _ in })
+    }
+}

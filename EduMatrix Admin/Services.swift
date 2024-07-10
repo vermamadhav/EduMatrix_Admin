@@ -2,12 +2,24 @@ import SwiftUI
 import Firebase
 import FirebaseFirestore
 
-struct PersonalDetailsViewModel{
+struct Services{
+    
+    static func loadImage(from url: URL , completion : @escaping (UIImage) -> Void){
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else {
+                print("Failed to load image from \(url): \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+            DispatchQueue.main.async {
+                completion(UIImage(data: data)!)
+            }
+        }.resume()
+    }
     
 
     
 
-    static func fetchData(completion: @escaping ([Educator]) -> Void) {
+    static func fetchListOfEducators(completion: @escaping ([Educator]) -> Void) {
         var personalDetails: [Educator] = []
         var errorMessage: String? = nil
         var db = Firestore.firestore()
@@ -26,7 +38,9 @@ struct PersonalDetailsViewModel{
                     let experience = data["experience"] as? String ?? ""
                     let subjectDomain = data["subjectDomain"] as? String ?? ""
                     let language = data["language"] as? String ?? ""
-                    return Educator(id: id, name: name, email: email, mobileNumber: mobileNumber, qualification: qualification, experience: experience, subjectDomain: subjectDomain, language: language)
+                    let about = data["about"] as? String ?? ""
+                    let aadhar = data["aadhar"] as? String ?? ""
+                    return Educator(id: id, name: name, email: email, mobileNumber: mobileNumber, qualification: qualification, experience: experience, subjectDomain: subjectDomain, language: language, adhaarCard: aadhar, about: about)
                 } ?? []
             }
         }

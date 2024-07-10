@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct EducatorDetailView: View {
     var educator: Educator
+    @State private var aadharImage : UIImage?
     
     var body: some View {
         Form {
@@ -24,28 +26,40 @@ struct EducatorDetailView: View {
                 Text("Experience: \(educator.experience)")
                 Text("Subjects/Domains: \(educator.subjectDomain)")
                 Text("Languages: \(educator.language)")
-//                Text("Aadhaar Card: \(educator.adhaarCard)")
-//                Text("About: \(educator.about)")
+                Text("About: \(educator.about)")
+            }
+            
+            if let image = aadharImage {
+                Image(uiImage: image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 373, height: 150)
+            }
+        }
+        .onAppear {
+            Services.loadImage(from: URL(string: educator.aadharImageURL)!){ image in
+                self.aadharImage = image
             }
         }
         .navigationTitle("Educator Details")
     }
 }
 
-//struct EducatorDetailView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let educator = Educator(
-//            name: "Alice Johnson",
-//            email: "alice.johnson@example.com",
-//            phone: "123-456-7890",
-//            qualification: "PhD in Mathematics",
-//            skills: "Calculus, Algebra, Statistics",
-//            experience: "10 years",
-//            subjects: "Mathematics",
-//            languages: "English, Spanish",
-//            adhaarCard: "1234-5678-9012",
-//            about: "Passionate about teaching and research in Mathematics."
-//        )
-//        EducatorDetailView(educator: educator)
-//    }
-//}
+struct EducatorDetailView_Previews: PreviewProvider {
+    static var previews: some View {
+        let educator = Educator(
+            name: "Alice Johnson",
+            email: "alice.johnson@example.com",
+            mobileNumber : "123-456-7890",
+            qualification: "PhD in Mathematics",
+            experience: "10 years",
+            subjectDomain : "Mathematics",
+            language: "English, Spanish",
+            aadharImageURL: "admin_avatar",
+            profileImageURL: "sdf",
+            about: "Passionate about teaching and research in Mathematics."
+        )
+        EducatorDetailView(educator: educator)
+    }
+}
+

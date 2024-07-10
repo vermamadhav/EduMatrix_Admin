@@ -9,18 +9,17 @@ import SwiftUI
 
 struct CoursesView: View {
     // Example course data
-    let courses: [Course] = [
-        Course(imageName: "course1", name: "SwiftUI Basics", author: "John Doe", duration: "10h", price: "$49"),
-        Course(imageName: "course2", name: "Advanced iOS", author: "Jane Smith", duration: "20h", price: "$99"),
-        Course(imageName: "course3", name: "UI/UX Design Fundamentals", author: "Alan Johnson", duration: "15h", price: "$79"),
-        Course(imageName: "course4", name: "Machine Learning Essentials", author: "Emily Brown", duration: "25h", price: "$129")
-    ]
+    @Binding var courses: [Course]
     
     var body: some View {
         ScrollView {
             LazyVStack(spacing: -20) {
                 ForEach(courses) { course in
-                    CourseCardView(course: course)
+                    CourseCardView(course: course, onUpdate: { updatedEducator in
+                        if let index = courses.firstIndex(where: { $0.id == updatedEducator.id }) {
+                            courses.remove(at: index)
+                        }
+                    })
                         .padding(.horizontal, -3) // Set 5-point horizontal padding
                 }
             }
@@ -30,8 +29,8 @@ struct CoursesView: View {
     }
 }
 
-struct CoursesView_Previews: PreviewProvider {
-    static var previews: some View {
-        CoursesView()
-    }
-}
+//struct CoursesView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CoursesView()
+//    }
+//}

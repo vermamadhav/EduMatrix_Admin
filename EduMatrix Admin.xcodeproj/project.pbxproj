@@ -23,6 +23,9 @@
 		A92821172C37A6C800D137B6 /* EducatorsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92821162C37A6C700D137B6 /* EducatorsRequest.swift */; };
 		A92821192C37A6D600D137B6 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92821182C37A6D600D137B6 /* Services.swift */; };
 		A928211B2C37A70900D137B6 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A928211A2C37A70900D137B6 /* DataModel.swift */; };
+		A928211E2C37FABD00D137B6 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = A928211D2C37FABD00D137B6 /* SDWebImage */; };
+		A92821202C37FABD00D137B6 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A928211F2C37FABD00D137B6 /* SDWebImageMapKit */; };
+		A92821232C37FD5600D137B6 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = A92821222C37FD5600D137B6 /* SDWebImageSwiftUI */; };
 		A98806842C3564A1005D2F17 /* EduMatrix_AdminApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98806832C3564A1005D2F17 /* EduMatrix_AdminApp.swift */; };
 		A98806862C3564A1005D2F17 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98806852C3564A1005D2F17 /* ContentView.swift */; };
 		A98806882C3564A3005D2F17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A98806872C3564A3005D2F17 /* Assets.xcassets */; };
@@ -64,10 +67,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A92821232C37FD5600D137B6 /* SDWebImageSwiftUI in Frameworks */,
 				A98806C92C366034005D2F17 /* FirebaseAnalytics in Frameworks */,
 				A98806CF2C366034005D2F17 /* FirebaseStorage in Frameworks */,
 				A98806CB2C366034005D2F17 /* FirebaseAuth in Frameworks */,
 				A98806CD2C366034005D2F17 /* FirebaseFirestore in Frameworks */,
+				A92821202C37FABD00D137B6 /* SDWebImageMapKit in Frameworks */,
+				A928211E2C37FABD00D137B6 /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +86,7 @@
 				008D033F2C373EAB005B497C /* ResetSuccessView.swift */,
 				008D033D2C373E78005B497C /* ResetPasswordView.swift */,
 				008D033B2C373E2F005B497C /* OTPView.swift */,
+				008D03392C373D67005B497C /* ForgotPasswordView.swift */,
 				A98806822C3564A1005D2F17 /* EduMatrix Admin */,
 				A98806812C3564A1005D2F17 /* Products */,
 			);
@@ -100,7 +107,6 @@
 				A98806832C3564A1005D2F17 /* EduMatrix_AdminApp.swift */,
 				1768EFDD2C367030001403DD /* LogInView.swift */,
 				A98806852C3564A1005D2F17 /* ContentView.swift */,
-				008D03392C373D67005B497C /* ForgotPasswordView.swift */,
 				1768EFDF2C367117001403DD /* HomeView.swift */,
 				1768EFE12C367172001403DD /* RequestsView.swift */,
 				178156ED2C36B10000D3DE88 /* EducatorCardView.swift */,
@@ -147,6 +153,9 @@
 				A98806CA2C366034005D2F17 /* FirebaseAuth */,
 				A98806CC2C366034005D2F17 /* FirebaseFirestore */,
 				A98806CE2C366034005D2F17 /* FirebaseStorage */,
+				A928211D2C37FABD00D137B6 /* SDWebImage */,
+				A928211F2C37FABD00D137B6 /* SDWebImageMapKit */,
+				A92821222C37FD5600D137B6 /* SDWebImageSwiftUI */,
 			);
 			productName = "EduMatrix Admin";
 			productReference = A98806802C3564A1005D2F17 /* EduMatrix Admin.app */;
@@ -178,6 +187,8 @@
 			mainGroup = A98806772C3564A1005D2F17;
 			packageReferences = (
 				A98806C72C366034005D2F17 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				A928211C2C37FABC00D137B6 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				A92821212C37FD5600D137B6 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 			);
 			productRefGroup = A98806812C3564A1005D2F17 /* Products */;
 			projectDirPath = "";
@@ -429,6 +440,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		A928211C2C37FABC00D137B6 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.19.4;
+			};
+		};
+		A92821212C37FD5600D137B6 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.1;
+			};
+		};
 		A98806C72C366034005D2F17 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -440,6 +467,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A928211D2C37FABD00D137B6 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A928211C2C37FABC00D137B6 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+		A928211F2C37FABD00D137B6 /* SDWebImageMapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A928211C2C37FABC00D137B6 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImageMapKit;
+		};
+		A92821222C37FD5600D137B6 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A92821212C37FD5600D137B6 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
 		A98806C82C366034005D2F17 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A98806C72C366034005D2F17 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

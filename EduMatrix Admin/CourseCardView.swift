@@ -1,19 +1,17 @@
-//
-//  CoursesView.swift
-//  EduMatrix Admin
-//
-//  Created by Ankit Rajput on 04/07/24.
-//
-
 import SwiftUI
+import FirebaseStorage
+import FirebaseFirestore
 
 struct CourseCardView: View {
     var course: Course
+    var onUpdate: (Course) -> Void
+    @State private var image : UIImage? = UIImage(named: "reload")  // Default placeholder image
+    @State private var showAlertConfirm = false
+    @State private var showAlertReject = false
     
     var body: some View {
         VStack(alignment: .leading) {
-            // Course Banner Image
-            Image(course.imageName)
+            Image(uiImage: image!)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(height: 150)
@@ -27,7 +25,7 @@ struct CourseCardView: View {
                         .font(.headline)
                         .bold()
                     
-                    Text("By \(course.author)")
+                    Text("By \(course.name)")
                         .font(.subheadline)
                 }
                 
@@ -42,9 +40,6 @@ struct CourseCardView: View {
                         .font(.subheadline)
                         //.bold()
                 }
-                
-                
-                
             }
             .padding([.horizontal, .top])
             
@@ -52,7 +47,7 @@ struct CourseCardView: View {
             HStack {
                 Button(action: {
                     // Handle approve action
-                    approveCourse()
+                    showAlertConfirm = true
                 }) {
                     Text("Approve")
                         .frame(width: 85, height: 28)
@@ -60,13 +55,24 @@ struct CourseCardView: View {
                         .foregroundColor(.white)
                         .cornerRadius(12)
                 }
+                .alert(isPresented: $showAlertConfirm) {
+                    Alert(
+                        title: Text("Confirmation"),
+                        message: Text("Do you want to approve the course request?"),
+                        primaryButton: .default(Text("Yes")) {
+                            print("approved")
+                            approveCourse()
+                        },
+                        secondaryButton: .cancel(Text("No"))
+                    )
+                }
                 .padding(.bottom, 5)
                 
                 Spacer()
                 
                 Button(action: {
                     // Handle reject action
-                    rejectCourse()
+                    showAlertReject = true
                 }) {
                     Text("Reject")
                         .frame(width: 85, height: 28)
@@ -74,9 +80,23 @@ struct CourseCardView: View {
                         .foregroundColor(.white)
                         .cornerRadius(12)
                 }
+                .alert(isPresented: $showAlertReject) {
+                    Alert(
+                        title: Text("Rejection"),
+                        message: Text("Do you want to reject the course request?"),
+                        primaryButton: .default(Text("Yes")) {
+                            print("Rejected")
+                            rejectCourse()
+                        },
+                        secondaryButton: .cancel(Text("No"))
+                    )
+                }
                 .padding(.bottom, 5)
             }
             .padding([.horizontal, .bottom])
+        }
+        .onAppear{
+            loadImage(from: URL(string: course.imageUrl)!)
         }
         .background(Color(.systemGray6))
         .cornerRadius(12)
@@ -84,22 +104,49 @@ struct CourseCardView: View {
         .padding()
     }
     
+    private func loadImage(from url: URL) {
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else {
+                print("Failed to load image from \(url): \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+            DispatchQueue.main.async {
+                self.image = UIImage(data: data)
+            }
+        }.resume()
+    }
+   
+
+               
     private func approveCourse() {
-        // Handle approve action
         print("Approved \(course.name)")
+        let db = Firestore.firestore()
+        db.collection("coursesRequests").document(course.id).delete()
+        onUpdate(course)
+        
+        db.collection("courses").document(course.id).setData(course.toDictionary()) { error in
+            if let error = error {
+                print("Error adding document)")
+            } else {
+                print("course added to Courses successfully")
+            }
+        }
     }
     
     private func rejectCourse() {
-        // Handle reject action
         print("Rejected \(course.name)")
+        let db = Firestore.firestore()
+        db.collection("coursesRequests").document(course.id).delete()
+        onUpdate(course)
+        
+        db.collection("rejectedCourses").document(course.id).setData(course.toDictionary()) { error in
+            if let error = error {
+                print("Error adding document)")
+            } else {
+                print("course added to rejected courses list")
+            }
+        }
+        
     }
-}
 
-struct CourseCardView_Previews: PreviewProvider {
-    static var previews: some View {
-        let course = Course(imageName: "course1", name: "SwiftUI Basics", author: "John Doe", duration: "10h", price: "$49")
-        CourseCardView(course: course)
-            .previewLayout(.sizeThatFits)
-            .padding()
-    }
 }

@@ -1,183 +1,318 @@
+//import SwiftUI
+//import FirebaseAuth
+//import FirebaseFirestore
 //
-//  LogInView.swift
-//  EduMatrix Admin
+//struct LoginView: View {
+//    @State private var email = ""
+//    @State private var password = ""
+//    @State private var isPasswordVisible = false
+//    @State private var isSignIn: Bool = false
+////    @EnvironmentObject var viewRouter: ViewRouter
+//    
+//    var body: some View {
+//        NavigationView {
+//            VStack {
+//                // Illustration
+//                Image("login") // Replace with your actual image name
+//                    .resizable()
+//                    .scaledToFill()
+//                    .frame(height: 250)
+//                    .padding(.top, 30)
+//                
+//                Text("Log in")
+//                    .font(.largeTitle)
+//                    .bold()
+//                
+//                // Email field
+//                TextField("Email address", text: $email)
+//                    .padding()
+//                    .background(Color(.secondarySystemBackground))
+//                    .cornerRadius(5.0)
+//                    .autocapitalization(.none)
+//                    .keyboardType(.emailAddress)
+//                    .overlay(
+//                        HStack {
+//                            Spacer()
+//                            if email.hasSuffix("@gmail.com") {
+//                                Image(systemName: "checkmark.circle.fill")
+//                                    .foregroundColor(.blue)
+//                                    .padding()
+//                            }
+//                        }
+//                    )
+//                    .padding(.top, 20)
+//                
+//                // Password field
+//                HStack {
+//                    if isPasswordVisible {
+//                        TextField("Password", text: $password)
+//                    } else {
+//                        SecureField("Password", text: $password)
+//                    }
+//                    Button(action: {
+//                        isPasswordVisible.toggle()
+//                    }) {
+//                        Image(systemName: isPasswordVisible ? "eye.slash.fill" : "eye.fill")
+//                            .foregroundColor(.gray)
+//                    }
+//                }
+//                .padding()
+//                .background(Color(.secondarySystemBackground))
+//                .cornerRadius(5.0)
+//                .padding(.top, 10)
+//                
+//                // Forgot password
+//                HStack {
+//                    Spacer()
+//                    NavigationLink(destination: ForgotPasswordView()) {
+//                        Text("Forgot password?")
+//                            .font(.body)
+//                            .foregroundColor(.blue)
+//                    }
+//                }
+//                .padding(.top, 5)
+//                
+//                // Login button
+//                Button(action: {
+//                    // Action for login
+//                    checkLoginCredentials(email: email, password: password)
+//                    
+//                    
+//                }) {
+//                   
+//                    Text("Log in")
+//                        .font(.headline)
+//                        .foregroundColor(.white)
+//                        .padding()
+//                        .frame(width: 220, height: 50)
+//                        .background(Color.blue)
+//                        .cornerRadius(10.0)
+//                        .padding(.top, 20)
 //
-//  Created by Ankit Rajput on 04/07/24.
+//                }
+//               NavigationLink(destination: ContentView(), isActive: $isSignIn) {
+//                    EmptyView()
+//                }
+//          Spacer(minLength: 50)
+//            }
+//            .padding(.horizontal, 30)
+//            .navigationBarHidden(true)
+//        }
+//    }
+//    
+//    func checkLoginCredentials(email: String, password: String) {
+//        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+//            if let error = error {
+//                print("Error: \(error.localizedDescription)")
+//            } else {
+//                let db = Firestore.firestore()
+//                let docRef = db.collection("admins").document(email)
+//                
+//                docRef.getDocument { (document, error) in
+//                    if let document = document, document.exists {
+//                        isSignIn = true
+//                        print("User signed in successfully")
+////                        viewRouter.currentPage = .contentView
+//                    } else {
+//                        print("User role mismatch. Expected: Admin")
+//                        do {
+//                            try Auth.auth().signOut()
+//                        } catch let signOutError as NSError {
+//                            print("Error signing out: \(signOutError)")
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
 //
+//struct ContentsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        LoginView()
+//    }
+//}
 
 import SwiftUI
-import FirebaseFirestore
 import FirebaseAuth
+import FirebaseFirestore
 
-struct LogInView: View {
-    @State private var email: String = ""
-    @State private var password: String = ""
-    @State private var isPasswordVisible: Bool = false
+struct LoginView: View {
+    @State private var email = ""
+    @State private var password = ""
+    @State private var isPasswordVisible = false
     @State private var isSignIn: Bool = false
-    @State private var forgotPassword: Bool = false
-    // Track login status
-    
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+
     var body: some View {
         NavigationView {
-            VStack(spacing: 16) {
-                Spacer()
-                
-                ZStack(alignment: .bottomLeading) {
-                    Color(hex: "F2F2F7") // Set background color
-                        .edgesIgnoringSafeArea(.all) // Ignore safe area to cover entire screen
-                    
-                    Image("admin_avatar") // Replace with your image name
-                        .resizable()
-                        .scaledToFill()
-                        .frame(height: 250) // Adjust height as needed
-                        .clipped()
-                    
-                    HStack {
-                        Text("Log In")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundColor(.black)
-                            .padding(.bottom, 5)
-                        Spacer()
-                    }
-                    .padding(.leading, 20) // Adjust this padding to match the email field's padding
-                }
-                
-                VStack(alignment: .leading, spacing: 26) {
-                    TextField("Enter Email", text: $email)
-                        .keyboardType(.emailAddress)
-                        .autocapitalization(.none)
-                        .padding()
-                        .background(Color(.systemGray6))
-                        .cornerRadius(8)
-                        .frame(height: 40)
-                        .padding(.horizontal, 10)
-                    
-                    ZStack(alignment: .trailing) {
-                        if isPasswordVisible {
-                            TextField("Enter Password", text: $password)
-                                .padding()
-                                .background(Color(.systemGray6))
-                                .cornerRadius(8)
-                                .frame(height: 40)
-                                .padding(.horizontal, 10)
-                        } else {
-                            SecureField("Enter Password", text: $password)
-                                .padding()
-                                .background(Color(.systemGray6))
-                                .cornerRadius(8)
-                                .frame(height: 40)
-                                .padding(.horizontal, 10)
+            VStack {
+                // Illustration
+                Image("login") // Replace with your actual image name
+                    .resizable()
+                    .scaledToFill()
+                    .frame(height: 250)
+                    .padding(.top, 30)
+
+                Text("Log in")
+                    .font(.largeTitle)
+                    .bold()
+
+                // Email field
+                TextField("Email address", text: $email)
+                    .padding()
+                    .background(Color(.secondarySystemBackground))
+                    .cornerRadius(5.0)
+                    .autocapitalization(.none)
+                    .keyboardType(.emailAddress)
+                    .overlay(
+                        HStack {
+                            Spacer()
+                            if email.isEmpty {
+                                Image(systemName: "")
+                                    .padding()
+                            }
+                           else if isValidEmail(email) {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundColor(.blue)
+                                    .padding()
+                            }
+                            else{
+                                Image(systemName: "xmark.circle.fill")
+                                    .foregroundColor(.red)
+                                    .padding()
+                            }
                         }
-                        
-                        Button(action: {
-                            isPasswordVisible.toggle()
-                        }) {
-                            Image(systemName: isPasswordVisible ? "eye.slash" : "eye")
-                                .foregroundColor(.gray)
-                                .padding(.trailing, 18)
-                        }
+                    )
+                    .padding(.top, 20)
+
+                // Password field
+                HStack {
+                    if isPasswordVisible {
+                        TextField("Password", text: $password)
+                    } else {
+                        SecureField("Password", text: $password)
                     }
-                    
                     Button(action: {
-                        // Action for forgot password
-                        forgotPassword=true
+                        isPasswordVisible.toggle()
                     }) {
-                        Text("Forgot Password?")
+                        Image(systemName: isPasswordVisible ? "eye.slash.fill" : "eye.fill")
+                            .foregroundColor(.gray)
+                    }
+                }
+                .padding()
+                .background(Color(.secondarySystemBackground))
+                .cornerRadius(5.0)
+                .padding(.top, 10)
+
+                // Forgot password
+                HStack {
+                    Spacer()
+                    NavigationLink(destination: ForgotPasswordView()) {
+                        Text("Forgot password?")
+                            .font(.body)
                             .foregroundColor(.blue)
                     }
-                    .padding(.leading, 10)
-                    .padding(.top, 5)
                 }
-                .padding(.horizontal)
-                .padding(.top, 16)
-                
-                NavigationLink(destination: ContentView()
-                    .navigationBarBackButtonHidden(true), isActive: $isSignIn) {
-                        EmptyView()
-                    }
-                NavigationLink(destination: ForgotPasswordView()
-                    .navigationBarBackButtonHidden(true), isActive: $forgotPassword) {
-                        EmptyView()
-                    }
-                
+                .padding(.top, 5)
+
+                // Login button
                 Button(action: {
-                    // Action for login
-                    isSignIn.toggle()
-//                    checkLoginCredentials(email: email, password: password, expectedRole: "admin")
-                    
+                    // Validate and check login credentials
+                    if validateCredentials(email: email, password: password) {
+                        checkLoginCredentials(email: email, password: password)
+                    }
                 }) {
-                    Text("Sign In")
+                    Text("Log in")
+                        .font(.headline)
                         .foregroundColor(.white)
                         .padding()
-                        .frame(maxWidth: .infinity)
+                        .frame(width: 220, height: 50)
                         .background(Color.blue)
-                        .cornerRadius(10)
-                        .padding(.horizontal, 10)
+                        .cornerRadius(10.0)
+                        .padding(.top, 20)
                 }
-                .padding(.top, 16)
-                .padding(.horizontal, 16)
                 
-                Spacer()
-                    .padding(.bottom)
+                NavigationLink(destination: ContentView(), isActive: $isSignIn) {
+                    EmptyView()
+                }
+                
+                Spacer(minLength: 50)
             }
-            
+            .padding(.horizontal, 30)
             .navigationBarHidden(true)
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text("Invalid Input"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+            }
+//            
+//            .onAppear(){
+//                do {
+//                    try Auth.auth().signOut()
+//                    // Navigate back to login or initial screen
+////                    viewRouter.currentPage = .loginView // Adjust as per your ViewRouter setup
+//                } catch let signOutError as NSError {
+//                    print("Error signing out: \(signOutError.localizedDescription)")
+//                }
+//            }
         }
-        
     }
-    
-    func checkLoginCredentials(email: String, password: String, expectedRole: String) {
+
+    func validateCredentials(email: String, password: String) -> Bool {
+        if email.isEmpty || !isValidEmail(email) {
+            alertMessage = "Please enter a valid email address."
+            showAlert = true
+            return false
+        }
+
+        if password.isEmpty || password.count < 6 {
+            alertMessage = "Password must be at least 6 characters long."
+            showAlert = true
+            return false
+        }
+
+        return true
+    }
+
+    func isValidEmail(_ email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: email)
+    }
+
+    func checkLoginCredentials(email: String, password: String) {
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             if let error = error {
                 print("Error: \(error.localizedDescription)")
+                alertMessage = error.localizedDescription
+                showAlert = true
+                return
             } else {
-                guard let userID = authResult?.user.uid else { return }
                 let db = Firestore.firestore()
-                let docRef = db.collection("users").document(userID)
+                let docRef = db.collection("admins").document(email)
+
                 docRef.getDocument { (document, error) in
                     if let document = document, document.exists {
-                        let data = document.data()
-                        let role = data?["role"] as? String
-                        if role == expectedRole {
-                            isSignIn.toggle()
-                            print("User signed in successfully with role: \(role ?? "")")
-                        } else {
-                            print("User role mismatch. Expected: \(expectedRole), Found: \(role ?? "")")
-                            // Sign out the user if the role does not match
-                            do {
-                                try Auth.auth().signOut()
-                            } catch let signOutError as NSError {
-                                print("Error signing out: \(signOutError)")
-                            }
-                        }
+                        isSignIn = true
+                        print("User signed in successfully")
                     } else {
-                        print("Document does not exist")
+                        print("User role mismatch. Expected: Admin")
+                        do {
+                            try Auth.auth().signOut()
+                        } catch let signOutError as NSError {
+                            print("Error signing out: \(signOutError)")
+                        }
+                        alertMessage = "User role mismatch. Expected: Admin"
+                        showAlert = true
                     }
                 }
             }
         }
     }
-    
 }
 
-struct LogInView_Previews: PreviewProvider {
+struct ContentsView_Previews: PreviewProvider {
     static var previews: some View {
-        LogInView()
-    }
-}
-
-extension Color {
-    init(hex: String) {
-        let scanner = Scanner(string: hex)
-        var rgbValue: UInt64 = 0
-        
-        scanner.scanHexInt64(&rgbValue)
-        
-        let red = Double((rgbValue & 0xFF0000) >> 16) / 255.0
-        let green = Double((rgbValue & 0x00FF00) >> 8) / 255.0
-        let blue = Double(rgbValue & 0x0000FF) / 255.0
-        
-        self.init(red: red, green: green, blue: blue)
+        LoginView()
     }
 }

@@ -20,6 +20,7 @@ struct ContentView: View {
                     Image(systemName: "book.fill")
                 }
         }
+        .navigationBarHidden(true)
     }
 }
 
