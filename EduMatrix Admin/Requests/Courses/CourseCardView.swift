@@ -8,6 +8,7 @@ struct CourseCardView: View {
     @State private var image : UIImage? = UIImage(named: "reload")  // Default placeholder image
     @State private var showAlertConfirm = false
     @State private var showAlertReject = false
+    @State private var showDetailView = false
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -38,7 +39,7 @@ struct CourseCardView: View {
                     
                     Text("Duration: \(course.duration)")
                         .font(.subheadline)
-                        //.bold()
+                    //.bold()
                 }
             }
             .padding([.horizontal, .top])
@@ -95,6 +96,16 @@ struct CourseCardView: View {
             }
             .padding([.horizontal, .bottom])
         }
+        .onTapGesture {
+            showDetailView = true
+        }
+        .background(Color(.systemGray6))
+        .cornerRadius(12)
+        .shadow(radius: 3)
+        .padding()
+        .sheet(isPresented: $showDetailView) {
+            CourseDetailView(course: course,onUpdate: onUpdate)
+        }
         .onAppear{
             loadImage(from: URL(string: course.imageUrl)!)
         }
@@ -115,9 +126,9 @@ struct CourseCardView: View {
             }
         }.resume()
     }
-   
-
-               
+    
+    
+    
     private func approveCourse() {
         print("Approved \(course.name)")
         let db = Firestore.firestore()
@@ -148,5 +159,5 @@ struct CourseCardView: View {
         }
         
     }
-
+    
 }

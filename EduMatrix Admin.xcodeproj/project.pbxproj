@@ -39,6 +39,7 @@
 		A98806CB2C366034005D2F17 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A98806CA2C366034005D2F17 /* FirebaseAuth */; };
 		A98806CD2C366034005D2F17 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = A98806CC2C366034005D2F17 /* FirebaseFirestore */; };
 		A98806CF2C366034005D2F17 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = A98806CE2C366034005D2F17 /* FirebaseStorage */; };
+		C53053252C452CC300C3BE47 /* CourseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53053242C452CC300C3BE47 /* CourseDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +69,7 @@
 		A98806872C3564A3005D2F17 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A988068A2C3564A3005D2F17 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A98806C52C35BF94005D2F17 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C53053242C452CC300C3BE47 /* CourseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 			children = (
 				178156EF2C36B12600D3DE88 /* CourseCardView.swift */,
 				178156F32C36C99D00D3DE88 /* CoursesView.swift */,
+				C53053242C452CC300C3BE47 /* CourseDetailView.swift */,
 			);
 			path = Courses;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C53053252C452CC300C3BE47 /* CourseDetailView.swift in Sources */,
 				17C6DAF72C44F1D70035AB4D /* CourseView.swift in Sources */,
 				178156FE2C3713B100D3DE88 /* EducatorDetailView.swift in Sources */,
 				A92821172C37A6C800D137B6 /* EducatorsRequest.swift in Sources */,
