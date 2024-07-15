@@ -28,21 +28,49 @@ struct Educator : Identifiable, Codable {
     }
 }
 
-//import SwiftUI
-//Color(hex: "F2F2F7") // Set background color
-//    .edgesIgnoringSafeArea(.all) // Ignore safe area to cover entire screen
+struct Course: Identifiable , Codable{ // Ensure Course conforms to Identifiable
+    var id: String
+    var educatorEmail : String
+    var educatorName: String
+    var name: String
+    var description: String
+    var duration: String
+    var language: String
+    var price: String
+    var category: String
+    var averageRating: Double
+    var keywords: String
+    var imageUrl: String
+    var videos: [Video]?
+    var notes: [Note]?
+    
+    func toDictionary() -> [String : Any]{
+        return [ "id": id,
+                 "email" : educatorEmail,
+                 "name": name,
+                 "description": description,
+                 "duration": duration,
+                 "language": language,
+                 "price": price,
+                 "category": category,
+                 "keywords": keywords,
+                 "imageUrl": imageUrl,
+                 "videos": videos,
+                 "notes": notes ]
+    }
+}
 
-//extension Color {
-//    init(hex: String) {
-//        let scanner = Scanner(string: hex)
-//        var rgbValue: UInt64 = 0
-//        
-//        scanner.scanHexInt64(&rgbValue)
-//        
-//        let red = Double((rgbValue & 0xFF0000) >> 16) / 255.0
-//        let green = Double((rgbValue & 0x00FF00) >> 8) / 255.0
-//        let blue = Double(rgbValue & 0x0000FF) / 255.0
-//        
-//        self.init(red: red, green: green, blue: blue)
-//    }
-//}
+struct Video: Identifiable , Codable{
+    var id: UUID
+    var title: String
+    var url: URL
+}
+
+struct Note: Identifiable , Codable{
+    var id: UUID
+    var title: String
+    var url: URL
+}
+
+
+
