@@ -111,8 +111,8 @@
 		17C6DAF92C44F8F30035AB4D /* Courses */ = {
 			isa = PBXGroup;
 			children = (
-				178156EF2C36B12600D3DE88 /* CourseCardView.swift */,
 				178156F32C36C99D00D3DE88 /* CoursesView.swift */,
+				178156EF2C36B12600D3DE88 /* CourseCardView.swift */,
 				C53053242C452CC300C3BE47 /* CourseDetailView.swift */,
 			);
 			path = Courses;

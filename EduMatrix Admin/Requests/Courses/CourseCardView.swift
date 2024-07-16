@@ -104,7 +104,7 @@ struct CourseCardView: View {
         .shadow(radius: 3)
         .padding()
         .sheet(isPresented: $showDetailView) {
-            CourseDetailView(course: course,onUpdate: onUpdate)
+            CourseDetailView(course: course ,onUpdate: onUpdate)
         }
         .onAppear{
             loadImage(from: URL(string: course.imageUrl)!)

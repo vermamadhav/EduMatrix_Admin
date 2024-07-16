@@ -55,8 +55,8 @@ struct RequestsView: View {
                     experience: data["experience"] as? String ?? "",
                     subjectDomain: data["subjectDomain"] as? String ?? "",
                     language: data["language"] as? String ?? "",
-                    aadharImageURL: data["aadharLink"] as? String ?? "",
-                    profileImageURL: data["profileImage"] as? String ?? "",
+                    aadharImageURL: data["aadharImageURL"] as? String ?? "",
+                    profileImageURL: data["profileImageURL"] as? String ?? "",
                     about: data["about"] as? String ?? ""
                 )
             }

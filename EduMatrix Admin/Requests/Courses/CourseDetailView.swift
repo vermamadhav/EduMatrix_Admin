@@ -3,8 +3,8 @@ import FirebaseFirestore
 import AVKit
 
 struct CourseDetailView: View {
-    var course: Course
-    var onUpdate: (Course) -> Void
+    var course: Course1
+    var onUpdate: (Course1) -> Void
     @State private var videos: [Video] = []
     @State private var notes: [Note] = []
     @State private var showAlertConfirm = false
@@ -58,31 +58,28 @@ struct CourseDetailView: View {
                 
                 // Course Content
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Course Content")
+                    Text("Course Lecture")
                         .font(.title2)
                         .bold()
                         .padding(.horizontal)
                     
-                    ForEach(videos) { video in
+//                    ForEach(course.videos) { video in
+//                        VStack(alignment: .leading) {
+//                            Text(video.title)
+//                                .font(.headline)
+//                            
+//                            VideoPlayer(player: AVPlayer(url: video.url))
+//                                .frame(height: 200)
+//                                .cornerRadius(10)
+//                        }
+//                        .padding(.horizontal)
+//                    }
+                    
+                    ForEach(course.videos) { video in
                         VStack(alignment: .leading) {
                             Text(video.title)
                                 .font(.headline)
-                            
-                            VideoPlayer(player: AVPlayer(url: video.url))
-                                .frame(height: 200)
-                                .cornerRadius(10)
-                        }
-                        .padding(.horizontal)
-                    }
-                    
-                    ForEach(notes) { note in
-                        VStack(alignment: .leading) {
-                            Text(note.title)
-                                .font(.headline)
-                            
-                            Text(note.url.absoluteString)
-                                .font(.body)
-                        }
+                            VideoPlayerView(videoURL: video.videoURL)                        }
                         .padding(.horizontal)
                     }
                 }
@@ -199,5 +196,14 @@ struct CourseDetailView: View {
                 print("Course added to rejected courses list")
             }
         }
+    }
+}
+
+struct VideoPlayerView: View {
+    let videoURL: URL
+
+    var body: some View {
+        VideoPlayer(player: AVPlayer(url: videoURL))
+            .frame(height: 300)
     }
 }
