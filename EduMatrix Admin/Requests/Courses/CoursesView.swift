@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CoursesView: View {
     // Example course data
-    @Binding var courses: [Course]
+    @Binding var courses: [Course1]
     
     var body: some View {
         ScrollView {
@@ -20,10 +20,10 @@ struct CoursesView: View {
                             courses.remove(at: index)
                         }
                     })
-                        .padding(.horizontal, -3) // Set 5-point horizontal padding
+                        .padding(.horizontal, -3)
                 }
             }
-            .padding([.top, .bottom], -5) // Set 5-point top and bottom padding
+            .padding([.top, .bottom], -5)
             .background(Color.clear) // Ensure background is clear to avoid overlapping issues
         }
     }

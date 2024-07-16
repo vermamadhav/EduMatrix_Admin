@@ -3,8 +3,8 @@ import FirebaseStorage
 import FirebaseFirestore
 
 struct CourseCardView: View {
-    var course: Course
-    var onUpdate: (Course) -> Void
+    var course: Course1
+    var onUpdate: (Course1) -> Void
     @State private var image : UIImage? = UIImage(named: "reload")  // Default placeholder image
     @State private var showAlertConfirm = false
     @State private var showAlertReject = false
@@ -157,7 +157,6 @@ struct CourseCardView: View {
                 print("course added to rejected courses list")
             }
         }
-        
     }
     
 }

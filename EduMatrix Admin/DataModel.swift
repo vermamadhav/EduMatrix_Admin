@@ -41,7 +41,7 @@ struct Course: Identifiable , Codable{ // Ensure Course conforms to Identifiable
     var averageRating: Double
     var keywords: String
     var imageUrl: String
-    var videos: [Video]?
+    var videos: [Video]
     var notes: [Note]?
     
     func toDictionary() -> [String : Any]{
@@ -60,10 +60,52 @@ struct Course: Identifiable , Codable{ // Ensure Course conforms to Identifiable
     }
 }
 
+struct Course1: Identifiable , Codable{ // Ensure Course conforms to Identifiable
+    var id: String
+    var educatorEmail : String
+    var educatorName: String
+    var name: String
+    var description: String
+    var duration: String
+    var language: String
+    var price: String
+    var category: String
+    var averageRating: Double
+    var keywords: String
+    var imageUrl: String
+    var videos: [Video]
+    var notes: [Note]?
+    
+    func toDictionary() -> [String: Any] {
+        return [
+            "id": id,
+            "email": educatorEmail,
+            "name": name,
+            "description": description,
+            "duration": duration,
+            "language": language,
+            "price": price,
+            "category": category,
+            "keywords": keywords,
+            "imageUrl": imageUrl,
+            "videos": videos.map { $0.toDictionary() },
+            "notes": notes
+        ]
+    }
+}
+
 struct Video: Identifiable , Codable{
     var id: UUID
     var title: String
-    var url: URL
+    var videoURL: URL
+    
+    func toDictionary() -> [String: Any] {
+        return [
+            "id": id.uuidString,
+            "title": title,
+            "videoURL": videoURL.absoluteString
+        ]
+    }
 }
 
 struct Note: Identifiable , Codable{

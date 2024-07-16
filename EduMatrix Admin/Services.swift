@@ -15,9 +15,6 @@ struct Services{
             }
         }.resume()
     }
-    
-
-    
 
     static func fetchListOfEducators(completion: @escaping ([Educator]) -> Void) {
         var personalDetails: [Educator] = []

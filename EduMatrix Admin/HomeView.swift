@@ -152,7 +152,7 @@ let sampleCourses: [Course] = [
         averageRating: 4.0,
         keywords: "web, development",
         imageUrl: "https://media.geeksforgeeks.org/wp-content/uploads/20230331172641/NodeJS-copy.webp",
-        videos: [Video(id: UUID(),title: "Intro", url: URL(string: "https://example.com/intro.mp4")!)],
+        videos: [Video(id: UUID(),title: "Intro", videoURL: URL(string: "https://example.com/intro.mp4")!)],
         notes: [Note(id: UUID(), title: "Note 1", url: URL(string: "https://example.com/note1.pdf")!)]
     ),
     
@@ -169,7 +169,7 @@ let sampleCourses: [Course] = [
         averageRating: 4.0,
         keywords: "Coding, skills",
         imageUrl: "https://i.ytimg.com/vi/NIJLFZk9SdA/hq720.jpg?sqp=-oaymwEXCK4FEIIDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLA_XpfR4VFvwAGUwnN2JdQ34-g76g",
-        videos: [Video(id: UUID(), title: "Lesson 1", url: URL(string: "https://example.com/lesson1.mp4")!)],
+        videos: [Video(id: UUID(), title: "Lesson 1", videoURL: URL(string: "https://example.com/lesson1.mp4")!)],
         notes: [Note(id: UUID(),title: "Note 2", url: URL(string: "https://example.com/note2.pdf")!)]
     ),
     
@@ -186,7 +186,7 @@ let sampleCourses: [Course] = [
         averageRating: 4.0,
         keywords: "business, skills",
         imageUrl: "https://i.ytimg.com/vi/NIJLFZk9SdA/hq720.jpg?sqp=-oaymwEXCK4FEIIDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLA_XpfR4VFvwAGUwnN2JdQ34-g76g",
-        videos: [Video(id: UUID(), title: "Lesson 1", url: URL(string: "https://example.com/lesson1.mp4")!)],
+        videos: [Video(id: UUID(), title: "Lesson 1", videoURL: URL(string: "https://example.com/lesson1.mp4")!)],
         notes: [Note(id: UUID(), title: "Note 2", url: URL(string: "https://example.com/note2.pdf")!)]
     )
 ]

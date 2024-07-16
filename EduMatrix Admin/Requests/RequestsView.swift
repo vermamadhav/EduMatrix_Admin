@@ -6,7 +6,7 @@ import FirebaseFirestore
 struct RequestsView: View {
     @State private var selectedSegment = 0
     @State private var educators: [Educator] = []
-    @State private var courses: [Course] = []
+    @State private var courses: [Course1] = []
     
     var body: some View {
         NavigationView {
@@ -73,13 +73,27 @@ struct RequestsView: View {
                 print("No documents")
                 return
             }
-            courses = documents.map { doc -> Course in
+            courses = documents.compactMap { doc in
                 let data = doc.data()
-                return Course(
+                
+                // Decode videos
+                var videos = [Video]()
+                if let videosData = data["videos"] as? [[String: Any]] {
+                    videos = videosData.compactMap { videoData in
+                        guard let idString = videoData["id"] as? String,
+                              let id = UUID(uuidString: idString),
+                              let title = videoData["title"] as? String,
+                              let videoURLString = videoData["videoURL"] as? String,
+                              let videoURL = URL(string: videoURLString) else { return nil }
+                        return Video(id: id, title: title, videoURL: videoURL)
+                    }
+                }
+                
+                // Create the course object
+                return Course1(
                     id: data["id"] as? String ?? "",
-                    educatorEmail: data["email"] as? String ?? "",
-                    educatorName: data["name"] as? String ?? "",
-                    //email: data["email"] as? String ?? "",
+                    educatorEmail: data["educatorEmail"] as? String ?? "",
+                    educatorName: data["educatorName"] as? String ?? "",
                     name: data["name"] as? String ?? "",
                     description: data["description"] as? String ?? "",
                     duration: data["duration"] as? String ?? "",
@@ -89,7 +103,7 @@ struct RequestsView: View {
                     averageRating: data["averageRating"] as? Double ?? 0.0,
                     keywords: data["keywords"] as? String ?? "",
                     imageUrl: data["imageUrl"] as? String ?? "",
-                    videos: nil,
+                    videos: videos,
                     notes: nil
                 )
             }
