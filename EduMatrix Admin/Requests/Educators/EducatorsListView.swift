@@ -28,7 +28,7 @@ struct EducatorsListView: View {
 struct EducatorsListView_Previews: PreviewProvider {
     static var previews: some View {
         let educator = Educator(
-            name: "Alice Johnson",
+            fullName: "Alice Johnson",
             email: "alice.johnson@example.com",
             mobileNumber : "123-456-7890",
             qualification: "PhD in Mathematics",

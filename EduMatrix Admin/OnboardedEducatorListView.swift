@@ -15,7 +15,7 @@ struct OnboardedEducatorListView: View {
         if searchText.isEmpty {
             return educators
         } else {
-            return educators.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+            return educators.filter { $0.fullName.localizedCaseInsensitiveContains(searchText) }
         }
     }
 
@@ -66,7 +66,7 @@ struct EducatorRow: View {
 
             // Educator Info
             VStack(alignment: .leading) {
-                Text(educator.name)
+                Text(educator.fullName)
                     .font(.headline)
                 Text(educator.subjectDomain)
                     .font(.subheadline)
@@ -98,14 +98,14 @@ struct OnboardedEducatorDetailView: View {
     var body: some View {
         VStack {
             // Example details for educator
-            Text(educator.name)
+            Text(educator.fullName)
                 .font(.largeTitle)
                 .padding()
             Text(educator.subjectDomain)
                 .font(.title2)
                 .padding()
         }
-        .navigationTitle(educator.name)
+        .navigationTitle(educator.fullName)
     }
 }
 

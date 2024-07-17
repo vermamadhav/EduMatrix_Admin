@@ -48,7 +48,7 @@ struct RequestsView: View {
                 let data = doc.data()
                 return Educator(
                     id: doc.documentID,
-                    name: data["name"] as? String ?? "",
+                    fullName: data["fullName"] as? String ?? "",
                     email: data["email"] as? String ?? "",
                     mobileNumber: data["mobileNumber"] as? String ?? "",
                     qualification: data["qualification"] as? String ?? "",

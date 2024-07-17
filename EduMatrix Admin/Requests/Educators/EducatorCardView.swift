@@ -24,7 +24,7 @@ struct EducatorCardView: View {
                 
                 // Educator Details
                 VStack(alignment: .leading, spacing: 5) {
-                    Text(educator.name)
+                    Text(educator.fullName)
                         .font(.headline)
                         .bold()
                         .foregroundColor(.black) // Set text color to black
@@ -100,7 +100,7 @@ struct EducatorCardView: View {
     }
     
     func approveEducator() {
-        print("Approved \(educator.name)")
+        print("Approved \(educator.fullName)")
         let db = Firestore.firestore()
         db.collection("educatorsRequests").document("\(educator.email)").delete()
         onUpdate(educator)
@@ -123,7 +123,7 @@ struct EducatorCardView: View {
     }
     
     func rejectEducator() {
-        print("Rejected \(educator.name)")
+        print("Rejected \(educator.fullName)")
         let db = Firestore.firestore()
         db.collection("educatorsRequests").document("\(educator.email)").delete()
         onUpdate(educator)
@@ -141,7 +141,7 @@ struct EducatorCardView: View {
 struct EducatorCardView_Previews: PreviewProvider {
     static var previews: some View {
         let educator = Educator(
-            name: "Alice Johnson",
+            fullName: "Alice Johnson",
             email: "alice.johnson@example.com",
             mobileNumber: "123-456-7890",
             qualification: "PhD in Mathematics",

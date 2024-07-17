@@ -3,7 +3,7 @@ import FirebaseFirestore
 
 struct Educator : Identifiable, Codable {
     @DocumentID var id: String?
-    var name: String
+    var fullName: String
     var email: String
     var mobileNumber: String
     var qualification: String
@@ -15,7 +15,7 @@ struct Educator : Identifiable, Codable {
     let about: String
     
     func toDictionary() -> [String : Any] {
-        return [ "name": name,
+        return [ "name": fullName,
                  "email": email,
                  "mobileNumber": mobileNumber,
                  "qualification": qualification,

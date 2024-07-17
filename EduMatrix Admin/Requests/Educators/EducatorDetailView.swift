@@ -15,7 +15,7 @@ struct EducatorDetailView: View {
     var body: some View {
         Form {
             Section(header: Text("Personal Information")) {
-                Text("Name: \(educator.name)")
+                Text("Name: \(educator.fullName)")
                 Text("Mail: \(educator.email)")
                 Text("Phone: \(educator.mobileNumber)")
             }
@@ -48,7 +48,7 @@ struct EducatorDetailView: View {
 struct EducatorDetailView_Previews: PreviewProvider {
     static var previews: some View {
         let educator = Educator(
-            name: "Alice Johnson",
+            fullName: "Alice Johnson",
             email: "alice.johnson@example.com",
             mobileNumber : "123-456-7890",
             qualification: "PhD in Mathematics",

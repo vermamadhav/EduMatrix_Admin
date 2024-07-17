@@ -13,16 +13,16 @@ struct EducatorCoursesView: View {
 
     var body: some View {
         VStack {
-            Text("Courses by \(educator.name)")
+            Text("Courses by \(educator.fullName)")
                 .font(.largeTitle)
                 .padding()
             
             List {
-                ForEach(courses.filter { $0.educatorName == educator.name }) { course in
+                ForEach(courses.filter { $0.educatorName == educator.fullName }) { course in
                     CourseView(course: course)
                 }
             }
         }
-        .navigationTitle(educator.name)
+        .navigationTitle(educator.fullName)
     }
 }

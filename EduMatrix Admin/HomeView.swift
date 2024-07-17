@@ -193,7 +193,7 @@ let sampleCourses: [Course] = [
 
 let sampleEducators: [Educator] = [
     Educator(
-        name: "reload",
+        fullName: "reload",
         email: "",
         mobileNumber: "",
         qualification: "",
