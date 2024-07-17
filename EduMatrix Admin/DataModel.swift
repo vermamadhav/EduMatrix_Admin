@@ -15,7 +15,7 @@ struct Educator : Identifiable, Codable {
     let about: String
     
     func toDictionary() -> [String : Any] {
-        return [ "name": fullName,
+        return [ "fullName": fullName,
                  "email": email,
                  "mobileNumber": mobileNumber,
                  "qualification": qualification,
@@ -80,6 +80,7 @@ struct Course1: Identifiable , Codable{ // Ensure Course conforms to Identifiabl
         return [
             "id": id,
             "email": educatorEmail,
+            "educatorName" : educatorName,
             "name": name,
             "description": description,
             "duration": duration,
