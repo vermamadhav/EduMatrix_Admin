@@ -33,7 +33,7 @@ struct OnboardedEducatorListView: View {
 
             List(filteredEducators) { educator in
                 NavigationLink(destination: EducatorDetailView(educator: educator)) {
-                    EducatorRow(educator: educator)
+                    EduRows(educator: educator)
                 }
                 .listRowBackground(Color.clear) // To make the row background clear
             }
@@ -43,7 +43,7 @@ struct OnboardedEducatorListView: View {
     }
 }
 
-struct EducatorRow: View {
+struct EduRows: View {
     var educator: Educator
 
     var body: some View {

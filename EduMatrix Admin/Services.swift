@@ -37,8 +37,10 @@ struct Services{
                     let language = data["language"] as? String ?? ""
                     let about = data["about"] as? String ?? ""
                     let aadhar = data["aadharImageURL"] as? String ?? ""
+                    let imageName = data["imageName"] as? String ?? ""
                     let profileImage = data["profileImageURL"] as? String ?? ""
-                    return Educator(id: id, fullName: name, email: email, mobileNumber: mobileNumber, qualification: qualification, experience: experience, subjectDomain: subjectDomain, language: language, aadharImageURL: aadhar, profileImageURL: profileImage, about: about)
+                
+                    return Educator(id: id, fullName: name, email: email, mobileNumber: mobileNumber, qualification: qualification, experience: experience, subjectDomain: subjectDomain, language: language, aadharImageURL: aadhar, profileImageURL: profileImage, about: about, name: name,imageName: imageName)
                 } ?? []
             }
         }

@@ -23,6 +23,7 @@ struct EduMatrix_AdminApp: App {
     var body: some Scene {
         WindowGroup {
             LoginView()
+           // ProfileView()
         }
     }
 }

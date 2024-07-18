@@ -11,6 +11,12 @@
 		008D033C2C373E2F005B497C /* OTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008D033B2C373E2F005B497C /* OTPView.swift */; };
 		008D033E2C373E78005B497C /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008D033D2C373E78005B497C /* ResetPasswordView.swift */; };
 		008D03402C373EAB005B497C /* ResetSuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008D033F2C373EAB005B497C /* ResetSuccessView.swift */; };
+		00DF03D42C4842C1004C334F /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00DF03D32C4842C1004C334F /* ProfileView.swift */; };
+		00DF03D62C485470004C334F /* AllCoursesGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00DF03D52C485470004C334F /* AllCoursesGridView.swift */; };
+		00DF03D82C4866AC004C334F /* HelpSupportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00DF03D72C4866AC004C334F /* HelpSupportView.swift */; };
+		00DF03DA2C4866D8004C334F /* FAQView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00DF03D92C4866D8004C334F /* FAQView.swift */; };
+		00DF03DC2C4866FC004C334F /* ContactUsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00DF03DB2C4866FC004C334F /* ContactUsView.swift */; };
+		00DF03DE2C48EA50004C334F /* EducatorDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00DF03DD2C48EA50004C334F /* EducatorDetailsView.swift */; };
 		1768EFDE2C367030001403DD /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1768EFDD2C367030001403DD /* LogInView.swift */; };
 		1768EFE02C367117001403DD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1768EFDF2C367117001403DD /* HomeView.swift */; };
 		1768EFE22C367172001403DD /* RequestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1768EFE12C367172001403DD /* RequestsView.swift */; };
@@ -47,6 +53,12 @@
 		008D033B2C373E2F005B497C /* OTPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPView.swift; sourceTree = "<group>"; };
 		008D033D2C373E78005B497C /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
 		008D033F2C373EAB005B497C /* ResetSuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetSuccessView.swift; sourceTree = "<group>"; };
+		00DF03D32C4842C1004C334F /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		00DF03D52C485470004C334F /* AllCoursesGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCoursesGridView.swift; sourceTree = "<group>"; };
+		00DF03D72C4866AC004C334F /* HelpSupportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpSupportView.swift; sourceTree = "<group>"; };
+		00DF03D92C4866D8004C334F /* FAQView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQView.swift; sourceTree = "<group>"; };
+		00DF03DB2C4866FC004C334F /* ContactUsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactUsView.swift; sourceTree = "<group>"; };
+		00DF03DD2C48EA50004C334F /* EducatorDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducatorDetailsView.swift; sourceTree = "<group>"; };
 		1768EFDD2C367030001403DD /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
 		1768EFDF2C367117001403DD /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		1768EFE12C367172001403DD /* RequestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsView.swift; sourceTree = "<group>"; };
@@ -158,6 +170,12 @@
 				1768EFDD2C367030001403DD /* LogInView.swift */,
 				A98806852C3564A1005D2F17 /* ContentView.swift */,
 				1768EFDF2C367117001403DD /* HomeView.swift */,
+				00DF03DD2C48EA50004C334F /* EducatorDetailsView.swift */,
+				00DF03D52C485470004C334F /* AllCoursesGridView.swift */,
+				00DF03D32C4842C1004C334F /* ProfileView.swift */,
+				00DF03D72C4866AC004C334F /* HelpSupportView.swift */,
+				00DF03DB2C4866FC004C334F /* ContactUsView.swift */,
+				00DF03D92C4866D8004C334F /* FAQView.swift */,
 				17C6DAED2C44EC620035AB4D /* OnboardedEducatorListView.swift */,
 				17C6DAF42C44F1740035AB4D /* EducatorCoursesView.swift */,
 				17C6DAF62C44F1D70035AB4D /* CourseView.swift */,
@@ -265,6 +283,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C53053252C452CC300C3BE47 /* CourseDetailView.swift in Sources */,
+				00DF03DC2C4866FC004C334F /* ContactUsView.swift in Sources */,
 				17C6DAF72C44F1D70035AB4D /* CourseView.swift in Sources */,
 				178156FE2C3713B100D3DE88 /* EducatorDetailView.swift in Sources */,
 				A92821172C37A6C800D137B6 /* EducatorsRequest.swift in Sources */,
@@ -277,14 +296,19 @@
 				008D03402C373EAB005B497C /* ResetSuccessView.swift in Sources */,
 				17C6DAF32C44EEE80035AB4D /* Colors.swift in Sources */,
 				17C6DAEE2C44EC620035AB4D /* OnboardedEducatorListView.swift in Sources */,
+				00DF03DE2C48EA50004C334F /* EducatorDetailsView.swift in Sources */,
 				008D033A2C373D67005B497C /* ForgotPasswordView.swift in Sources */,
 				A98806862C3564A1005D2F17 /* ContentView.swift in Sources */,
 				17C6DAF52C44F1740035AB4D /* EducatorCoursesView.swift in Sources */,
+				00DF03D42C4842C1004C334F /* ProfileView.swift in Sources */,
+				00DF03D82C4866AC004C334F /* HelpSupportView.swift in Sources */,
 				A92821192C37A6D600D137B6 /* Services.swift in Sources */,
 				178156F02C36B12600D3DE88 /* CourseCardView.swift in Sources */,
 				008D033C2C373E2F005B497C /* OTPView.swift in Sources */,
 				A98806842C3564A1005D2F17 /* EduMatrix_AdminApp.swift in Sources */,
+				00DF03DA2C4866D8004C334F /* FAQView.swift in Sources */,
 				178157022C3717FD00D3DE88 /* EducatorsListView.swift in Sources */,
+				00DF03D62C485470004C334F /* AllCoursesGridView.swift in Sources */,
 				178156F42C36C99D00D3DE88 /* CoursesView.swift in Sources */,
 				17C6DAF02C44EDC50035AB4D /* EducatorView.swift in Sources */,
 			);

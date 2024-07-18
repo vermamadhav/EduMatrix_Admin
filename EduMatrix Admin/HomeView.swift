@@ -2,221 +2,546 @@
 //  HomeView.swift
 //  EduMatrix Admin
 //
-//  Created by Ankit Rajput on 04/07/24.
+//  Created by Sunny Siddhu on 04/07/24.
 //
 
 import SwiftUI
 
 struct HomeView: View {
-    @State private var courses: [Course] = sampleCourses
-    @State private var educatorsList : [Educator] = sampleEducators
-    
+    //    @State private var courses: [Course] = sampleCourses
+    //    @State private var educatorsList : [Educator] = sampleEducators
     var body: some View {
-        NavigationView {
+        GeometryReader { geometry in
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
+                    HomeHeaderView()
+                    StatsView()
+                    PerformanceChartView()
+                    EducatorsView(educator: sampleEducators)
+                    CategoriesView()
+                    PopularCoursesView()
+                }
+                .padding()
+            }
+        }
+        .background(Color(.systemBackground))
+        .navigationBarHidden(true)
+    }
+}
+
+struct HomeHeaderView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Text("Hello")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundColor(Color(.label))
+                    .accessibility(label: Text("Greeting"))
+                    .accessibility(hint: Text("Welcome message"))
+                Spacer()
+                
+                NavigationLink(destination: ProfileView()) {
+                    Image(systemName: "person.circle")
+                        .font(.largeTitle)
+                        .foregroundColor(.blue)
+                }
+                .buttonStyle(PlainButtonStyle())
+                .accessibility(label: Text("Profile"))
+                .accessibility(hint: Text("Navigate to profile page"))
+            }
+            Text("Manage and oversee your platform")
+                .font(.subheadline)
+                .foregroundColor(Color(.label))
+                .fontWeight(.semibold)
+                .accessibility(label: Text("Subtitle"))
+                .accessibility(hint: Text("Description of the app functionality"))
+            SearchBarView()
+        }
+        .padding()
+    }
+}
+
+
+struct SearchBarView: View {
+    @State private var searchText = ""
+    
+    var body: some View {
+        HStack {
+            TextField("Search", text: $searchText)
+                .padding(10)
+                .padding(.leading, 20) // Adjust for icon spacing
+                .frame(maxWidth: .infinity) // Expand to full width of the parent HStack
+                .background(Color(.white)) // Use system color for native look
+                .foregroundColor(.white)
+                .cornerRadius(10)
+                .overlay(
                     HStack {
-                        Text("Home")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(.gray)
+                            .frame(width: 20, height: 20) // Adjust the frame size of the magnifying glass
+                            .padding(.leading, 8)
                         Spacer()
-                        Image(systemName: "person.circle")
-                            .font(.title)
-                    }
-                    .padding([.leading, .trailing], 10)
-                    .padding(.top, 20)
-                    
-                    TextField("Search educators...", text: .constant(""))
-                        .padding()
-                        .background(Color(.systemGray6))
-                        .cornerRadius(8)
-                        .overlay(
-                            HStack {
-                                Spacer()
-                                Image(systemName: "mic.fill")
+                        if !searchText.isEmpty {
+                            Button(action: {
+                                self.searchText = ""
+                            }) {
+                                Image(systemName: "xmark.circle.fill")
                                     .foregroundColor(.gray)
-                                    .padding(.trailing, 10)
+                                    .padding(.trailing, 8)
                             }
-                        )
-                        .padding([.leading, .trailing], 10)
-                    
-                    VStack(alignment: .leading) {
-                        Text("Personal DashBoard")
-                            .font(.headline)
-                            .padding([.leading, .trailing], 10)
-                        
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text("Profit")
-                                    .font(.subheadline)
-                                Text("01 Mar 2021 - 16 Mar 2021")
-                                    .font(.caption)
-                                    .foregroundColor(.gray)
-                                Text("INR 5,40,000")
-                                    .font(.title2)
-                                    .fontWeight(.bold)
-                            }
-                            Spacer()
-                            PieChartView()
-                                .frame(width: 100, height: 100)
-                        }
-                        .padding()
-                        .background(Color(.systemGray6))
-                        .cornerRadius(8)
-                        .padding([.leading, .trailing], 10)
-                    }
-                    
-                    
-                    // Categories
-                    HStack {
-                        Text("Educators")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                        Spacer()
-                        NavigationLink(destination: OnboardedEducatorListView(educators: educatorsList)) {
-                            Text("See All")
-                                .foregroundColor(Color.primaryColor)
                         }
                     }
-                    .padding()
-                    
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 15) {
-                            ForEach(educatorsList) { educator in
-                                NavigationLink(destination: EducatorCoursesView(educator: educator, courses: courses)) {
-                                    EducatorView(educator: educator)
-                                }
-                            }
-                        }
-                        .padding(.horizontal)
-                    }
-                    .onAppear{
-                        Services.fetchListOfEducators(){
-                            educators in
-                            self.educatorsList = educators
-                        }
-                    }
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text("Categories of Educators")
-                                .font(.headline)
-                            Spacer()
-                            Button(action: {}) {
-                                Text("See All")
-                            }
-                        }
-                        .padding([.leading, .trailing], 10)
-                        
-                        ForEach(["Subject Matter Expert", "Instructional Designers", "Tutors", "Course Instructors", "Mentors", "Technical Trainers"], id: \.self) { category in
-                            NavigationLink(destination: Text(category)) {
-                                HStack {
-                                    Image(systemName: "rectangle.stack.person.crop")
-                                        .foregroundColor(.black)
-                                    Text(category)
-                                        .foregroundColor(.black)
-                                    Spacer()
-                                    Image(systemName: "chevron.right")
-                                        .foregroundColor(.gray)
-                                }
-                                .padding()
-                                .background(Color(.systemGray6))
-                                .cornerRadius(8)
-                                .padding([.leading, .trailing], 10)
-                            }
-                        }
+                )
+        }
+        .padding(.horizontal, 10) // Padding around the search bar for better appearance
+    }
+}
+
+
+
+
+struct StatsView: View {
+    var body: some View {
+        VStack{
+            HStack(spacing: 10) {
+                StatItemView(title: "1000", subtitle: "Total Enrollments", icon: "graduationcap.fill")
+                StatItemView(title: "11", subtitle: "Total Courses", icon: "book.fill")
+                
+            }
+            
+            HStack(spacing: 10) {
+                
+                StatItemView(title: "20", subtitle: "Total Educators", icon: "person.2.fill")
+                StatItemView(title: "20,000", subtitle: "Total Earning", icon: "dollarsign.circle.fill")
+            }
+        }
+    }
+}
+
+struct StatItemView: View {
+    var title: String
+    var subtitle: String
+    var icon: String
+    
+    var body: some View {
+        VStack {
+            HStack {
+                Text(title)
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .accessibility(label: Text(title))
+                    .accessibility(hint: Text(subtitle))
+                Spacer()
+                Image(systemName: icon)
+                    .foregroundColor(.blue)
+                    .accessibility(hidden: true)
+            }
+            HStack{
+                Text(subtitle)
+                    .font(.caption)
+                    .foregroundColor(Color(.label))
+            }
+            Image("wave") // Replace with wave image asset
+                .resizable()
+            //.aspectRatio(contentMode: .fill)
+                .frame(height: 20)
+            // .clipped()
+        }
+        .padding()
+        //.background(Color(.systemBackground))
+        .cornerRadius(10)
+        .shadow(color: .white, radius: 5, x: 0, y: 2)
+    }
+}
+
+struct PerformanceChartView: View {
+    @State private var selectedSegment = 0
+    let segments = ["Overall", "Engagement", "Revenue"]
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text("Platform Performance")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .accessibility(label: Text("Platform Performance"))
+                    .accessibility(hint: Text("Displays performance metrics"))
+                Spacer()
+                Text("This Week")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+                    .accessibility(label: Text("This Week"))
+                    .accessibility(hint: Text("Performance for the current week"))
+                
+            }
+            .padding(.bottom, 10)
+            
+            Picker("", selection: $selectedSegment) {
+                ForEach(0..<segments.count, id: \.self) {
+                    Text(self.segments[$0])
+                        .accessibility(label: Text(self.segments[$0]))
+                }
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding(.bottom, 10)
+            
+            LineChartView(selectedSegment: $selectedSegment)
+                .frame(height: 150)
+            
+            HStack {
+                Circle().fill(Color.blue).frame(width: 10, height: 10)
+                Text("Overall")
+                    .font(.subheadline)
+                    .accessibility(label: Text("Overall"))
+                Spacer()
+                Circle().fill(Color.blue.opacity(0.7)).frame(width: 10, height: 10)
+                Text("Engagement")
+                    .font(.subheadline)
+                    .accessibility(label: Text("Engagement"))
+                Spacer()
+                Circle().fill(Color.blue.opacity(0.4)).frame(width: 10, height: 10)
+                Text("Revenue")
+                    .font(.subheadline)
+                    .accessibility(label: Text("Revenue"))
+            }
+            .padding(.top, 10)
+        }
+        .padding()
+       // .background(Color(.systemBackground))
+        .cornerRadius(10)
+        .shadow(color: .lightGray, radius: 5, x: 0, y: 2)
+    }
+}
+
+struct LineChartView: View {
+    @Binding var selectedSegment: Int
+    
+    var body: some View {
+        GeometryReader { geometry in
+            Path { path in
+                let width = geometry.size.width
+                let height = geometry.size.height
+                
+                let data: [CGFloat] = self.dataForSegment(self.selectedSegment)
+                guard data.count > 1 else { return }
+                
+                let stepX = width / CGFloat(data.count - 1)
+                let maxY = data.max() ?? 1
+                
+                path.move(to: CGPoint(x: 0, y: height - (data[0] / maxY * height)))
+                
+                for i in 1..<data.count {
+                    let x = CGFloat(i) * stepX
+                    let y = height - (data[i] / maxY * height)
+                    path.addLine(to: CGPoint(x: x, y: y))
+                }
+            }
+            .stroke(Color.blue, lineWidth: 2)
+            .accessibility(label: Text("Line Chart"))
+            .accessibility(value: Text("\(self.dataForSegment(self.selectedSegment).map { "\($0)" }.joined(separator: ", "))"))
+            
+        }
+    }
+    
+    func dataForSegment(_ segment: Int) -> [CGFloat] {
+        switch segment {
+        case 0: return [0.2, 0.4, 0.6, 0.8, 0.6, 0.4, 0.2]
+        case 1: return [0.1, 0.5, 0.3, 0.7, 0.5, 0.3, 0.1]
+        case 2: return [0.3, 0.6, 0.4, 0.9, 0.7, 0.5, 0.3]
+        default: return []
+        }
+    }
+}
+
+
+struct EducatorsView: View {
+    var educator: [Educator]
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text("Educators")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .accessibility(label: Text("Educators"))
+                    .accessibility(hint: Text("List of educators"))
+                Spacer()
+                NavigationLink(destination: EducatorsListView(educators: educator)) {
+                    Text("See All")
+                        .font(.subheadline)
+                        .foregroundColor(.blue)
+                        .accessibility(label: Text("See All"))
+                        .accessibility(hint: Text("Navigate to all educators"))
+                }
+            }
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 20) {
+                    ForEach(educators, id: \.id) { educator in
+                        EducatorItemView(educator: educator)
                     }
                 }
-                .padding(.bottom, 20)
             }
-            .navigationBarHidden(true)
-            .navigationTitle("Home")
+        }
+        .padding()
+       // .background(Color(.systemBackground))
+        .cornerRadius(10)
+        .shadow(color: .lightGray, radius: 5, x: 0, y: 2)
+    }
+}
+
+struct EducatorItemView: View {
+    var educator: Educator
+    
+    var body: some View {
+        VStack {
+            NavigationLink(destination: EducatorDetailsView(educator: educator)) {
+                Image(educator.imageName)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 60, height: 60)
+                    .clipShape(Circle())
+            }
+            Text(educator.name)
+                .font(.caption)
+                .foregroundColor(Color(.label)) // Adapts to dark/light mode
+                .accessibility(label: Text(educator.name))
+                .accessibility(hint: Text("Name of educator"))
         }
     }
 }
 
 
 
-
-// Sample Data
-let sampleCourses: [Course] = [
-    Course(
-        id: "1",
-        educatorEmail: "email",
-        educatorName: "Prakash Sharma",
-        name: "Web Development",
-        description: "Learn web development from scratch.",
-        duration: "12h 52m",
-        language: "English",
-        price: "Rs.1,500",
-        category: "Coding",
-        averageRating: 4.0,
-        keywords: "web, development",
-        imageUrl: "https://media.geeksforgeeks.org/wp-content/uploads/20230331172641/NodeJS-copy.webp",
-        videos: [Video(id: UUID(),title: "Intro", videoURL: URL(string: "https://example.com/intro.mp4")!)],
-        notes: [Note(id: UUID(), title: "Note 1", url: URL(string: "https://example.com/note1.pdf")!)]
-    ),
-    
-    Course(
-        id: "2",
-        educatorEmail: "gmial",
-        educatorName: "Instructor Name",
-        name: "Complete Swift ",
-        description: "Course description here.",
-        duration: "10h 20m",
-        language: "English",
-        price: "Rs.1,200",
-        category: "Tech",
-        averageRating: 4.0,
-        keywords: "Coding, skills",
-        imageUrl: "https://i.ytimg.com/vi/NIJLFZk9SdA/hq720.jpg?sqp=-oaymwEXCK4FEIIDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLA_XpfR4VFvwAGUwnN2JdQ34-g76g",
-        videos: [Video(id: UUID(), title: "Lesson 1", videoURL: URL(string: "https://example.com/lesson1.mp4")!)],
-        notes: [Note(id: UUID(),title: "Note 2", url: URL(string: "https://example.com/note2.pdf")!)]
-    ),
-    
-    Course(
-        id: "2",
-        educatorEmail: "hotmail",
-        educatorName: "Instructor Name",
-        name: "Another Course",
-        description: "Course description here.",
-        duration: "10h 20m",
-        language: "English",
-        price: "Rs.1,200",
-        category: "Business",
-        averageRating: 4.0,
-        keywords: "business, skills",
-        imageUrl: "https://i.ytimg.com/vi/NIJLFZk9SdA/hq720.jpg?sqp=-oaymwEXCK4FEIIDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLA_XpfR4VFvwAGUwnN2JdQ34-g76g",
-        videos: [Video(id: UUID(), title: "Lesson 1", videoURL: URL(string: "https://example.com/lesson1.mp4")!)],
-        notes: [Note(id: UUID(), title: "Note 2", url: URL(string: "https://example.com/note2.pdf")!)]
-    )
-]
-
-let sampleEducators: [Educator] = [
-    Educator(
-        fullName: "reload",
-        email: "",
-        mobileNumber: "",
-        qualification: "",
-        experience: "",
-        subjectDomain: "",
-        language: "",
-        aadharImageURL: "",
-        profileImageURL: "",
-        about: ""
-    )
-]
-
-struct PieChartView: View {
+struct CategoriesView: View {
     var body: some View {
-        // Placeholder for your pie chart
-        Circle()
-            .strokeBorder(Color.gray, lineWidth: 2)
+        VStack(alignment: .leading) {
+            HStack {
+                Text("Categories")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .accessibility(label: Text("Categories"))
+                    .accessibility(hint: Text("List of categories"))
+                Spacer()
+                Text("See All")
+                    .font(.subheadline)
+                    .foregroundColor(.blue)
+                    .accessibility(label: Text("See All"))
+                    .accessibility(hint: Text("Navigate to all Categories"))
+            }
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 10) {
+                    ForEach(categories, id: \.id) { category in
+                        CategoryItemView(category: category)
+                    }
+                }
+            }
+        }
+        .padding()
+       // .background(Color(.systemBackground))
+        .cornerRadius(10)
+        .shadow(color: .lightGray, radius: 5, x: 0, y: 2)
     }
 }
 
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView()
+struct CategoryItemView: View {
+    var category: Category
+    
+    var body: some View {
+        VStack {
+            // NavigationLink(destination: CourseDetailView(course: cou, onUpdate: <#(Course1) -> Void#>)) {
+            Image(category.imageName)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 130, height: 170)
+                .cornerRadius(10)
+            Text(category.name)
+                .font(.caption)
+                .foregroundColor(Color(.label)) // Adapts to dark/light mode
+                .accessibility(label: Text(category.name))
+                .accessibility(hint: Text("Name of category"))
+        }
     }
 }
 
+struct Category: Identifiable {
+    let id = UUID()
+    let name: String
+    let imageName: String
+}
+
+let categories = [
+    Category(name: "Coding", imageName: "categories"),
+    Category(name: "Graphic Designing", imageName: "categories"),
+    Category(name: "Competitive Exams", imageName: "categories"),
+    Category(name: "Marketing", imageName: "categories")
+]
+
+struct PopularCoursesView: View {
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text("Popular Courses")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .accessibility(label: Text("Popular Courses"))
+                    .accessibility(hint: Text("List of popular courses"))
+                Spacer()
+                NavigationLink(destination: AllCoursesGridView(courses: courses)) {
+                    Text("See All")
+                        .font(.subheadline)
+                        .foregroundColor(.blue)
+                        .accessibility(label: Text("See All"))
+                        .accessibility(hint: Text("Navigate to all popular courses"))
+                    
+                }
+            }
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 10 ) {
+                    ForEach(courses, id: \.id) { course in
+                        CourseItemView(course: course)
+                    }
+                }
+            }
+        }
+        .padding()
+       // .background(Color(.systemBackground))
+        .cornerRadius(10)
+        .shadow(color: .lightGray, radius: 5, x: 0, y: 2)
+    }
+}
+
+struct CourseItemView: View {
+    var course: Course
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            ZStack(alignment: .bottomLeading) {
+                NavigationLink(destination: CourseDetailsView(course: course)){
+                    Image(course.imageName)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 240, height: 150)
+                        .cornerRadius(10)
+                        .accessibility(label: Text("Course Image"))
+                        .accessibility(hint: Text("Image of the course"))
+                }
+                Text(course.title)
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                    .padding([.leading, .bottom], 8)
+                    .background(Color.black.opacity(0.3))
+                    .foregroundColor(.white)
+                    .cornerRadius(10, corners: [.bottomLeft, .bottomRight])
+                    .accessibility(label: Text(course.title))
+                    .accessibility(hint: Text("Title of the course"))
+            }
+            
+            HStack {
+                Text(course.duration)
+                    .font(.caption)
+                    .accessibility(label: Text("Duration"))
+                    .accessibility(hint: Text(course.duration))
+                Spacer()
+                Text("Rs.\(course.price)")
+                    .font(.caption)
+                    .fontWeight(.bold)
+                    .accessibility(label: Text("Price"))
+                    .accessibility(hint: Text("Rs. \(course.price)"))
+            }
+            HStack {
+                Text("\(course.lessons) Lessons")
+                    .font(.caption)
+                    .accessibility(label: Text("Lessons"))
+                    .accessibility(hint: Text("\(course.lessons) Lessons"))
+                Spacer()
+                Text("★ \(course.averageRating, specifier: "%.1f")")
+                    .font(.caption)
+                    .foregroundColor(.yellow)
+                    .accessibility(label: Text("Rating"))
+                    .accessibility(hint: Text("Rating \(course.averageRating, specifier: "%.1f") stars"))
+            }
+            
+        }
+       // .background(Color(.systemBackground))
+        .cornerRadius(10)
+    }
+}
+
+struct CourseDetailsView: View {
+    var course: Course
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            AsyncImage(url: URL(string: course.imageUrl)) { image in
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .accessibility(label: Text("Course Image"))
+                    .accessibility(hint: Text("Image of the course"))
+            } placeholder: {
+                Image(systemName: "photo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .accessibility(label: Text("Placeholder Image"))
+                    .accessibility(hint: Text("Placeholder image for course"))
+            }
+            .frame(height: 200)
+            .clipped()
+            
+            Text(course.name)
+                .font(.title)
+                .fontWeight(.bold)
+                .accessibility(label: Text(course.name))
+                .accessibility(hint: Text("Name of the course"))
+            
+            Text(course.description)
+                .font(.body)
+                .accessibility(label: Text("Description"))
+                .accessibility(hint: Text(course.description))
+            
+            
+            HStack {
+                Text("Duration: \(course.duration)")
+                    .accessibility(label: Text("Duration"))
+                    .accessibility(hint: Text(course.duration))
+                Spacer()
+                Text("Language: \(course.language)")
+                    .accessibility(label: Text("Language"))
+                    .accessibility(hint: Text(course.language))
+            }
+            
+            Spacer()
+        }
+        .padding()
+        .navigationTitle(course.name)
+       // .background(Color(.systemBackground))
+    }
+}
+
+
+
+extension View {
+    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+        clipShape(RoundedCorner(radius: radius, corners: corners))
+    }
+}
+
+struct RoundedCorner: Shape {
+    var radius: CGFloat = .infinity
+    var corners: UIRectCorner = .allCorners
+    
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        return Path(path.cgPath)
+    }
+}
+
+extension Color {
+    static let CustomWhite = Color("customWhite")
+    static let primaryBlue = Color("PrimaryBlue")
+    static let LightGray = Color("lightGray")
+}
+
+#Preview{
+    HomeView()
+}

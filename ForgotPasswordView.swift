@@ -16,7 +16,7 @@ struct ForgotPasswordView: View {
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
-        NavigationView {
+        //NavigationView {
             VStack {
                 Image("forgotPassword") // Use a system image or replace with your own image name
                     .resizable()
@@ -101,7 +101,7 @@ struct ForgotPasswordView: View {
                             .foregroundColor(.blue)
                     }
                 }
-            }
+            //}
             .alert(isPresented: $showError) {
                 Alert(
                     title: Text("Error"),

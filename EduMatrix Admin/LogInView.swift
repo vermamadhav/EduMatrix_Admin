@@ -232,7 +232,9 @@ struct LoginView: View {
                         .background(Color.blue)
                         .cornerRadius(10.0)
                         .padding(.top, 20)
+                       
                 }
+                .keyboardShortcut(.defaultAction)
                 
                 NavigationLink(destination: ContentView(), isActive: $isSignIn) {
                     EmptyView()

@@ -1,13 +1,13 @@
 //
-//  EducatorDetailView.swift
-//  EduMatrix
+//  EducatorDetailsView.swift
+//  EduMatrix Admin
 //
-//  Created by Shahiyan Khan on 15/07/24.
+//  Created by aaa on 18/07/24.
 //
 
 import Foundation
 import SwiftUI
-struct EducatorDetailView: View {
+struct EducatorDetailsView: View {
     var educator: Educator
     
     var body: some View {
@@ -138,4 +138,3 @@ struct EducatorDetailView: View {
         }
     }
 }
-

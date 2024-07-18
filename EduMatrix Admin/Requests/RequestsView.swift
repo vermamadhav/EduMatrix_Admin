@@ -20,8 +20,8 @@ struct RequestsView: View {
                 .padding(.horizontal, 15)
                 
                 if selectedSegment == 0 {
-                    //                    EducatorsListView(educators: educators, onApprove: approveEducator, onReject: rejectEducator)
-                    EducatorsListView(educators: $educators)
+                                      // EducatorsListView(educators: educators, onApprove: approveEducator, onReject: rejectEducator)
+                    EducatorsListView(educators: educators)
                 } else {
                     CoursesView(courses: $courses)
                 }
@@ -57,7 +57,9 @@ struct RequestsView: View {
                     language: data["language"] as? String ?? "",
                     aadharImageURL: data["aadharImageURL"] as? String ?? "",
                     profileImageURL: data["profileImageURL"] as? String ?? "",
-                    about: data["about"] as? String ?? ""
+                    about: data["about"] as? String ?? "",
+                    name: data["name"] as? String ?? "",
+                    imageName: data["imageName"] as? String ?? ""
                 )
             }
         }
