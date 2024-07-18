@@ -8,7 +8,7 @@ struct EducatorsListView: View {
         if searchText.isEmpty {
             return educators
         } else {
-            return educators.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+            return educators.filter { $0.fullName.localizedCaseInsensitiveContains(searchText) }
         }
     }
     
@@ -68,7 +68,7 @@ struct EducatorRow: View {
             
             // Educator Info
             VStack(alignment: .leading) {
-                Text(educator.name)
+                Text(educator.fullName)
                     .font(.headline)
                 Text(educator.subjectDomain)
                     .font(.subheadline)

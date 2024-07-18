@@ -8,14 +8,14 @@
 import Foundation
 import SwiftUI
 struct AllCoursesGridView: View {
-    var courses: [Course]
+    var courses: [Course1]
     
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 16) {
                 ForEach(courses) { course in
                     NavigationLink(destination: CourseDetailsView(course: course)) {
-                        CourseCardView(course: course)
+                        trendingCourseCardView(course: course)
                             .frame(maxWidth: .infinity, minHeight: 140)
                             .background(Color.white)
                             .cornerRadius(10)
@@ -98,7 +98,7 @@ struct AllCoursesGridView: View {
     //}
     
     struct CourseDetailsView: View {
-        var course: Course
+        var course: Course1
         
         var body: some View {
             VStack(alignment: .leading, spacing: 20) {

@@ -17,8 +17,8 @@ struct HomeView: View {
                     HomeHeaderView()
                     StatsView()
                     PerformanceChartView()
-                    EducatorsView(educator: sampleEducators)
-                    CategoriesView()
+                    EducatorsView()
+//                    CategoriesView()
                     PopularCoursesView()
                 }
                 .padding()
@@ -214,6 +214,82 @@ struct PerformanceChartView: View {
     }
 }
 
+struct trendingCourseCardView: View {
+    let course: Course1
+
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack(alignment: .bottomLeading) {
+                // Image section
+                if let url = URL(string: course.imageUrl) {
+                    AsyncImage(url: url) { image in
+                        image.resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: geometry.size.width, height: geometry.size.height)
+                            .clipped()
+                    } placeholder: {
+                        Color.gray
+                            .frame(width: geometry.size.width, height: geometry.size.height)
+                            .clipped()
+                    }
+                } else {
+                    Color.gray
+                        .frame(width: geometry.size.width, height: geometry.size.height)
+                        .clipped()
+                }
+                
+                // Blur section with description
+                VStack(alignment: .leading, spacing: 5) {
+                    HStack{
+                        Text(course.name)
+                            .font(.headline)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                        Spacer()
+                        Text("₹ \(course.price)")
+                            .font(.headline)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                    }
+                    HStack {
+                        Text("By \(course.educatorName)")
+                            .font(.subheadline)
+                            .foregroundColor(.white)
+                        Spacer()
+                        HStack {
+                            ForEach(0..<5) { star in
+                                Image(systemName: star < Int(course.averageRating) ? "star.fill" : "star")
+                                    .foregroundColor(.yellow)
+                                    .font(.headline)
+                                    .padding(.horizontal,-5)
+                            }
+                        }
+                    }
+                }
+                .padding(.horizontal)
+                .background(BlurView(style: .systemMaterialDark).opacity(0.80))
+                .frame(height: geometry.size.height / 3) // 1/3rd height of the card
+            }
+            .cornerRadius(10)
+            .shadow(radius: 5)
+            .padding(.vertical, 5)
+        }
+        .aspectRatio(16/9, contentMode: .fit) // Adjust aspect ratio as needed
+        .frame(width: UIScreen.main.bounds.width - 40)
+    }
+}
+
+struct BlurView: UIViewRepresentable {
+    var style: UIBlurEffect.Style
+
+    func makeUIView(context: Context) -> UIVisualEffectView {
+        return UIVisualEffectView(effect: UIBlurEffect(style: style))
+    }
+
+    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
+        uiView.effect = UIBlurEffect(style: style)
+    }
+}
 struct LineChartView: View {
     @Binding var selectedSegment: Int
     
@@ -256,7 +332,7 @@ struct LineChartView: View {
 
 
 struct EducatorsView: View {
-    var educator: [Educator]
+    @State private var educatorsList: [Educator] = sampleEducators
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -266,7 +342,7 @@ struct EducatorsView: View {
                     .accessibility(label: Text("Educators"))
                     .accessibility(hint: Text("List of educators"))
                 Spacer()
-                NavigationLink(destination: EducatorsListView(educators: educator)) {
+                NavigationLink(destination: EducatorsListView(educators: educatorsList)) {
                     Text("See All")
                         .font(.subheadline)
                         .foregroundColor(.blue)
@@ -276,9 +352,14 @@ struct EducatorsView: View {
             }
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 20) {
-                    ForEach(educators, id: \.id) { educator in
+                    ForEach(educatorsList, id: \.id) { educator in
                         EducatorItemView(educator: educator)
                     }
+                }
+            }
+            .onAppear{
+                Services.fetchListOfEducators(){ educators in
+                    educatorsList = educators
                 }
             }
         }
@@ -295,53 +376,30 @@ struct EducatorItemView: View {
     var body: some View {
         VStack {
             NavigationLink(destination: EducatorDetailsView(educator: educator)) {
-                Image(educator.imageName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 60, height: 60)
-                    .clipShape(Circle())
-            }
-            Text(educator.name)
-                .font(.caption)
-                .foregroundColor(Color(.label)) // Adapts to dark/light mode
-                .accessibility(label: Text(educator.name))
-                .accessibility(hint: Text("Name of educator"))
-        }
-    }
-}
-
-
-
-struct CategoriesView: View {
-    var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                Text("Categories")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .accessibility(label: Text("Categories"))
-                    .accessibility(hint: Text("List of categories"))
-                Spacer()
-                Text("See All")
-                    .font(.subheadline)
-                    .foregroundColor(.blue)
-                    .accessibility(label: Text("See All"))
-                    .accessibility(hint: Text("Navigate to all Categories"))
-            }
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 10) {
-                    ForEach(categories, id: \.id) { category in
-                        CategoryItemView(category: category)
+                if let url = URL(string: educator.profileImageURL) {
+                    AsyncImage(url: url) { image in
+                        image.resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 60, height: 60)
+                            .clipShape(Circle())
+                    } placeholder: {
+                        Color.gray
+                            .frame(width: 60, height: 60)
+                            .clipped()
                     }
                 }
+                //            Text(educator.fullName)
+                //                .font(.caption)
+                //                .foregroundColor(Color(.label)) // Adapts to dark/light mode
+                //                .accessibility(label: Text(educator.fullName))
+                //                .accessibility(hint: Text("Name of educator"))
             }
         }
-        .padding()
-       // .background(Color(.systemBackground))
-        .cornerRadius(10)
-        .shadow(color: .lightGray, radius: 5, x: 0, y: 2)
     }
 }
+
+
+
 
 struct CategoryItemView: View {
     var category: Category
@@ -377,6 +435,8 @@ let categories = [
 ]
 
 struct PopularCoursesView: View {
+    @State private var courses: [Course1] = sampleCourses
+    
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -398,10 +458,15 @@ struct PopularCoursesView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 10 ) {
                     ForEach(courses, id: \.id) { course in
-                        CourseItemView(course: course)
+                        trendingCourseCardView(course: course)
                     }
                 }
             }
+            .onAppear{                Services.fetchListOfCourses(){ courses in
+                    self.courses = courses
+                }
+            }
+
         }
         .padding()
        // .background(Color(.systemBackground))
@@ -431,7 +496,7 @@ struct CourseItemView: View {
                     .padding([.leading, .bottom], 8)
                     .background(Color.black.opacity(0.3))
                     .foregroundColor(.white)
-                    .cornerRadius(10, corners: [.bottomLeft, .bottomRight])
+//                    .cornerRadius(10, corners: [.bottomLeft, .bottomRight])
                     .accessibility(label: Text(course.title))
                     .accessibility(hint: Text("Title of the course"))
             }

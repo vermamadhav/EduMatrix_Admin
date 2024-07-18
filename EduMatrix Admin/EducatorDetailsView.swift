@@ -29,7 +29,7 @@ struct EducatorDetailsView: View {
                     }
                     Spacer()
                     VStack(alignment: .leading) {
-                        Text(educator.name)
+                        Text(educator.fullName)
                             .font(.title)
                             .bold()
                             .foregroundColor(Color.primaryColor)
@@ -105,7 +105,7 @@ struct EducatorDetailsView: View {
                 Text("I am specialize in teaching students how to create three-dimensional models using software like Blender, Maya, or 3ds Max. They cover techniques in modeling, texturing, rendering, and animation, providing students with the skills needed to produce detailed and realistic 3D graphics for various applications such as video games, movies, and virtual reality.")
                     .padding(.horizontal)
                 
-                Text("Courses by \(educator.name)")
+                Text("Courses by \(educator.fullName)")
                     .font(.headline)
                     .padding()
                 

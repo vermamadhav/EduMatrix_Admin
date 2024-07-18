@@ -26,18 +26,18 @@ struct CourseCardView: View {
                         .font(.headline)
                         .bold()
                     
-                    Text("By \(course.name)")
+                    Text("By \(course.educatorName)")
                         .font(.subheadline)
                 }
                 
                 Spacer()
                 
                 VStack(alignment: .trailing) {
-                    Text(course.price)
+                    Text("₹ \(course.price)")
                         .font(.headline)
                         .bold()
                     
-                    Text("Duration: \(course.duration)")
+                    Text("Duration: \(course.duration) hrs")
                         .font(.subheadline)
                     //.bold()
                 }

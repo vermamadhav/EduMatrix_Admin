@@ -57,9 +57,7 @@ struct RequestsView: View {
                     language: data["language"] as? String ?? "",
                     aadharImageURL: data["aadharImageURL"] as? String ?? "",
                     profileImageURL: data["profileImageURL"] as? String ?? "",
-                    about: data["about"] as? String ?? "",
-                    name: data["name"] as? String ?? "",
-                    imageName: data["imageName"] as? String ?? ""
+                    about: data["about"] as? String ?? ""
                 )
             }
         }

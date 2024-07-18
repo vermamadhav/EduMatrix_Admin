@@ -13,8 +13,6 @@ struct Educator : Identifiable, Codable {
     let aadharImageURL: String
     let profileImageURL : String
     let about: String
-    let name: String
-    let imageName: String
     
     func toDictionary() -> [String : Any] {
         return [ "fullName": fullName,
@@ -26,7 +24,6 @@ struct Educator : Identifiable, Codable {
                  "language": language,
                  "aadharImageURL": aadharImageURL,
                  "profileImageURL" : profileImageURL,
-                 "imageName": imageName,
                  "about": about ]
     }
 }
@@ -37,17 +34,12 @@ struct Educator : Identifiable, Codable {
 //    let imageName: String
 //}
 
-let educators = [
-//    Educator(name: "Mr. Jeetu", imageName: "educator1"),
-//    Educator(name: "Mrs. Jaya", imageName: "educator2"),
-//    Educator(name: "Ms. Cardi", imageName: "educator3"),
-//    Educator(name: "Mr. Kendric", imageName: "educator4"),
-//    Educator(name: "Mr. Naman", imageName: "educator5")
-    Educator(fullName: "Mr. Jeetu", email: "", mobileNumber: "", qualification: "", experience: "", subjectDomain: "", language: "", aadharImageURL: "", profileImageURL: "", about: "", name: "Mr. Jeetu", imageName: "educator1"),
-    Educator(fullName: "Mrs. Jaya", email: "", mobileNumber: "", qualification: "", experience: "", subjectDomain: "", language: "", aadharImageURL: "", profileImageURL: "", about: "", name: "Mrs. Jaya", imageName: "educator2"),
-    Educator(fullName: "Ms. Cardi", email: "", mobileNumber: "", qualification: "", experience: "", subjectDomain: "", language: "", aadharImageURL: "", profileImageURL: "", about: "", name: "Ms. Cardi", imageName: "educator3"),
-    Educator(fullName: "Mr. Kendric", email: "", mobileNumber: "", qualification: "", experience: "", subjectDomain: "", language: "", aadharImageURL: "", profileImageURL: "", about: "", name: "Mr. Naman", imageName: "educator4")
-]
+//let educators = [
+//    Educator(fullName: "Mr. Jeetu", email: "", mobileNumber: "", qualification: "", experience: "", subjectDomain: "", language: "", aadharImageURL: "", profileImageURL: "", about: "", imageName: "educator1"),
+//    Educator(fullName: "Mrs. Jaya", email: "", mobileNumber: "", qualification: "", experience: "", subjectDomain: "", language: "", aadharImageURL: "", profileImageURL: "", about: "", imageName: "educator2"),
+//    Educator(fullName: "Ms. Cardi", email: "", mobileNumber: "", qualification: "", experience: "", subjectDomain: "", language: "", aadharImageURL: "", profileImageURL: "", about: "", imageName: "educator3"),
+//    Educator(fullName: "Mr. Kendric", email: "", mobileNumber: "", qualification: "", experience: "", subjectDomain: "", language: "", aadharImageURL: "", profileImageURL: "", about: "", imageName: "educator4")
+//]
 
 struct Course: Identifiable , Codable{ // Ensure Course conforms to Identifiable
     var title: String
@@ -120,13 +112,13 @@ struct Course1: Identifiable , Codable{ // Ensure Course conforms to Identifiabl
     }
 }
 
-let courses = [
+let sampleCourses = [
 
-    Course(title: "Web Development", imageName: "Course1", lessons: 14, id: "", educatorEmail: "", educatorName: "", name: "", description: "", duration: "14h", language: "", price: "1500", category: "", averageRating: 4.5, keywords: "", imageUrl: "Course1", videos: [Video]()),
-    Course(title: "Web Development", imageName: "Course1", lessons: 14, id: "", educatorEmail: "", educatorName: "", name: "", description: "", duration: "14h", language: "", price: "1500", category: "", averageRating: 4.5, keywords: "", imageUrl: "Course1", videos: [Video]())
+    Course1(id: "", educatorEmail: "", educatorName: "", name: "Web Development", description: "", duration: "14h", language: "", price: "1500", category: "", averageRating: 4.5, keywords: "", imageUrl: "Course1", videos: [Video]()),
+    Course1(id: "", educatorEmail: "", educatorName: "", name: "Development", description: "", duration: "14h", language: "", price: "1500", category: "", averageRating: 4.5, keywords: "", imageUrl: "Course1", videos: [Video]())
 ]
 
-let sampleEducators : [Educator] = [Educator(fullName: "dsf", email: "SF", mobileNumber: "b", qualification: "e", experience: "e", subjectDomain: "e", language: "e", aadharImageURL: "e", profileImageURL: "E", about: "E", name: "e", imageName: "e")]
+let sampleEducators : [Educator] = [Educator(fullName: "dsf", email: "SF", mobileNumber: "b", qualification: "e", experience: "e", subjectDomain: "e", language: "e", aadharImageURL: "e", profileImageURL: "E", about: "E")]
 
 struct Video: Identifiable , Codable{
     var id: UUID

@@ -150,9 +150,7 @@ struct EducatorCardView_Previews: PreviewProvider {
             language: "English, Spanish",
             aadharImageURL: "jdfhlsiear",
             profileImageURL: "sfksl",
-            about: "Passionate about teaching and research in Mathematics.",
-            name: "",
-            imageName: ""
+            about: "Passionate about teaching and research in Mathematics."
         )
         EducatorCardView(educator: educator, onUpdate: { _ in })
     }
