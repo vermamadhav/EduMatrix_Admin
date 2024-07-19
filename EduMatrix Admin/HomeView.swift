@@ -24,7 +24,7 @@ struct HomeView: View {
                 .padding()
             }
         }
-        .background(Color(.systemBackground))
+        //.background(Color(.systemBackground))
         .navigationBarHidden(true)
     }
 }
@@ -37,8 +37,8 @@ struct HomeHeaderView: View {
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundColor(Color(.label))
-                    .accessibility(label: Text("Greeting"))
-                    .accessibility(hint: Text("Welcome message"))
+                   // .accessibility(label: Text("Greeting"))
+                   // .accessibility(hint: Text("Welcome message"))
                 Spacer()
                 
                 NavigationLink(destination: ProfileView()) {
@@ -47,15 +47,15 @@ struct HomeHeaderView: View {
                         .foregroundColor(.blue)
                 }
                 .buttonStyle(PlainButtonStyle())
-                .accessibility(label: Text("Profile"))
-                .accessibility(hint: Text("Navigate to profile page"))
+                //.accessibility(label: Text("Profile"))
+               // .accessibility(hint: Text("Navigate to profile page"))
             }
             Text("Manage and oversee your platform")
                 .font(.subheadline)
                 .foregroundColor(Color(.label))
                 .fontWeight(.semibold)
-                .accessibility(label: Text("Subtitle"))
-                .accessibility(hint: Text("Description of the app functionality"))
+               // .accessibility(label: Text("Subtitle"))
+                //.accessibility(hint: Text("Description of the app functionality"))
             SearchBarView()
         }
         .padding()
@@ -70,16 +70,14 @@ struct SearchBarView: View {
         HStack {
             TextField("Search", text: $searchText)
                 .padding(10)
-                .padding(.leading, 20) // Adjust for icon spacing
-                .frame(maxWidth: .infinity) // Expand to full width of the parent HStack
-                .background(Color(.white)) // Use system color for native look
-                .foregroundColor(.white)
+                .padding(.leading, 25) // Adjust for icon spacing
+                .background(Color(.systemGray6)) // Use system color for native look
                 .cornerRadius(10)
                 .overlay(
                     HStack {
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(.gray)
-                            .frame(width: 20, height: 20) // Adjust the frame size of the magnifying glass
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                             .padding(.leading, 8)
                         Spacer()
                         if !searchText.isEmpty {
@@ -97,6 +95,8 @@ struct SearchBarView: View {
         .padding(.horizontal, 10) // Padding around the search bar for better appearance
     }
 }
+
+
 
 
 
@@ -130,8 +130,8 @@ struct StatItemView: View {
                 Text(title)
                     .font(.title2)
                     .fontWeight(.bold)
-                    .accessibility(label: Text(title))
-                    .accessibility(hint: Text(subtitle))
+                    //.accessibility(label: Text(title))
+                   // .accessibility(hint: Text(subtitle))
                 Spacer()
                 Image(systemName: icon)
                     .foregroundColor(.blue)
@@ -149,9 +149,9 @@ struct StatItemView: View {
             // .clipped()
         }
         .padding()
-        //.background(Color(.systemBackground))
+        .background(Color.white)
         .cornerRadius(10)
-        .shadow(color: .white, radius: 5, x: 0, y: 2)
+        .shadow(color: .lightGray, radius: 5, x: 0, y: 2)
     }
 }
 
@@ -165,14 +165,14 @@ struct PerformanceChartView: View {
                 Text("Platform Performance")
                     .font(.headline)
                     .fontWeight(.bold)
-                    .accessibility(label: Text("Platform Performance"))
-                    .accessibility(hint: Text("Displays performance metrics"))
+                    //.accessibility(label: Text("Platform Performance"))
+                   // .accessibility(hint: Text("Displays performance metrics"))
                 Spacer()
                 Text("This Week")
                     .font(.subheadline)
                     .foregroundColor(.gray)
-                    .accessibility(label: Text("This Week"))
-                    .accessibility(hint: Text("Performance for the current week"))
+                   // .accessibility(label: Text("This Week"))
+                  //  .accessibility(hint: Text("Performance for the current week"))
                 
             }
             .padding(.bottom, 10)
@@ -180,7 +180,7 @@ struct PerformanceChartView: View {
             Picker("", selection: $selectedSegment) {
                 ForEach(0..<segments.count, id: \.self) {
                     Text(self.segments[$0])
-                        .accessibility(label: Text(self.segments[$0]))
+                       // .accessibility(label: Text(self.segments[$0]))
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
@@ -193,17 +193,17 @@ struct PerformanceChartView: View {
                 Circle().fill(Color.blue).frame(width: 10, height: 10)
                 Text("Overall")
                     .font(.subheadline)
-                    .accessibility(label: Text("Overall"))
+                   // .accessibility(label: Text("Overall"))
                 Spacer()
                 Circle().fill(Color.blue.opacity(0.7)).frame(width: 10, height: 10)
                 Text("Engagement")
                     .font(.subheadline)
-                    .accessibility(label: Text("Engagement"))
+                  //  .accessibility(label: Text("Engagement"))
                 Spacer()
                 Circle().fill(Color.blue.opacity(0.4)).frame(width: 10, height: 10)
                 Text("Revenue")
                     .font(.subheadline)
-                    .accessibility(label: Text("Revenue"))
+                   // .accessibility(label: Text("Revenue"))
             }
             .padding(.top, 10)
         }
@@ -276,7 +276,9 @@ struct trendingCourseCardView: View {
         }
         .aspectRatio(16/9, contentMode: .fit) // Adjust aspect ratio as needed
         .frame(width: UIScreen.main.bounds.width - 40)
+        .shadow(color: .lightGray, radius: 5, x: 0, y: 2)
     }
+    
 }
 
 struct BlurView: UIViewRepresentable {
@@ -314,8 +316,8 @@ struct LineChartView: View {
                 }
             }
             .stroke(Color.blue, lineWidth: 2)
-            .accessibility(label: Text("Line Chart"))
-            .accessibility(value: Text("\(self.dataForSegment(self.selectedSegment).map { "\($0)" }.joined(separator: ", "))"))
+            //.accessibility(label: Text("Line Chart"))
+           // .accessibility(value: Text("\(self.dataForSegment(self.selectedSegment).map { "\($0)" }.joined(separator: ", "))"))
             
         }
     }
@@ -339,15 +341,15 @@ struct EducatorsView: View {
                 Text("Educators")
                     .font(.title2)
                     .fontWeight(.bold)
-                    .accessibility(label: Text("Educators"))
-                    .accessibility(hint: Text("List of educators"))
+                  //  .accessibility(label: Text("Educators"))
+                  //  .accessibility(hint: Text("List of educators"))
                 Spacer()
                 NavigationLink(destination: EducatorsListView(educators: educatorsList)) {
                     Text("See All")
                         .font(.subheadline)
                         .foregroundColor(.blue)
-                        .accessibility(label: Text("See All"))
-                        .accessibility(hint: Text("Navigate to all educators"))
+                        //.accessibility(label: Text("See All"))
+                       // .accessibility(hint: Text("Navigate to all educators"))
                 }
             }
             ScrollView(.horizontal, showsIndicators: false) {
@@ -401,38 +403,38 @@ struct EducatorItemView: View {
 
 
 
-struct CategoryItemView: View {
-    var category: Category
-    
-    var body: some View {
-        VStack {
-            // NavigationLink(destination: CourseDetailView(course: cou, onUpdate: <#(Course1) -> Void#>)) {
-            Image(category.imageName)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 130, height: 170)
-                .cornerRadius(10)
-            Text(category.name)
-                .font(.caption)
-                .foregroundColor(Color(.label)) // Adapts to dark/light mode
-                .accessibility(label: Text(category.name))
-                .accessibility(hint: Text("Name of category"))
-        }
-    }
-}
+//struct CategoryItemView: View {
+//    var category: Category
+//    
+//    var body: some View {
+//        VStack {
+//            // NavigationLink(destination: CourseDetailView(course: cou, onUpdate: <#(Course1) -> Void#>)) {
+//            Image(category.imageName)
+//                .resizable()
+//                .aspectRatio(contentMode: .fill)
+//                .frame(width: 130, height: 170)
+//                .cornerRadius(10)
+//            Text(category.name)
+//                .font(.caption)
+//                .foregroundColor(Color(.label)) // Adapts to dark/light mode
+//                .accessibility(label: Text(category.name))
+//                .accessibility(hint: Text("Name of category"))
+//        }
+//    }
+//}
+//
+//struct Category: Identifiable {
+//    let id = UUID()
+//    let name: String
+//    let imageName: String
+//}
 
-struct Category: Identifiable {
-    let id = UUID()
-    let name: String
-    let imageName: String
-}
-
-let categories = [
-    Category(name: "Coding", imageName: "categories"),
-    Category(name: "Graphic Designing", imageName: "categories"),
-    Category(name: "Competitive Exams", imageName: "categories"),
-    Category(name: "Marketing", imageName: "categories")
-]
+//let categories = [
+//    Category(name: "Coding", imageName: "categories"),
+//    Category(name: "Graphic Designing", imageName: "categories"),
+//    Category(name: "Competitive Exams", imageName: "categories"),
+//    Category(name: "Marketing", imageName: "categories")
+//]
 
 struct PopularCoursesView: View {
     @State private var courses: [Course1] = sampleCourses
@@ -443,15 +445,15 @@ struct PopularCoursesView: View {
                 Text("Popular Courses")
                     .font(.title2)
                     .fontWeight(.bold)
-                    .accessibility(label: Text("Popular Courses"))
-                    .accessibility(hint: Text("List of popular courses"))
+                   // .accessibility(label: Text("Popular Courses"))
+                   // .accessibility(hint: Text("List of popular courses"))
                 Spacer()
                 NavigationLink(destination: AllCoursesGridView(courses: courses)) {
                     Text("See All")
                         .font(.subheadline)
                         .foregroundColor(.blue)
-                        .accessibility(label: Text("See All"))
-                        .accessibility(hint: Text("Navigate to all popular courses"))
+                        //.accessibility(label: Text("See All"))
+                       // .accessibility(hint: Text("Navigate to all popular courses"))
                     
                 }
             }
@@ -487,8 +489,8 @@ struct CourseItemView: View {
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 240, height: 150)
                         .cornerRadius(10)
-                        .accessibility(label: Text("Course Image"))
-                        .accessibility(hint: Text("Image of the course"))
+//                        .accessibility(label: Text("Course Image"))
+//                        .accessibility(hint: Text("Image of the course"))
                 }
                 Text(course.title)
                     .font(.headline)
@@ -497,33 +499,33 @@ struct CourseItemView: View {
                     .background(Color.black.opacity(0.3))
                     .foregroundColor(.white)
 //                    .cornerRadius(10, corners: [.bottomLeft, .bottomRight])
-                    .accessibility(label: Text(course.title))
-                    .accessibility(hint: Text("Title of the course"))
+//                    .accessibility(label: Text(course.title))
+//                    .accessibility(hint: Text("Title of the course"))
             }
             
             HStack {
                 Text(course.duration)
                     .font(.caption)
-                    .accessibility(label: Text("Duration"))
-                    .accessibility(hint: Text(course.duration))
+//                    .accessibility(label: Text("Duration"))
+//                    .accessibility(hint: Text(course.duration))
                 Spacer()
                 Text("Rs.\(course.price)")
                     .font(.caption)
                     .fontWeight(.bold)
-                    .accessibility(label: Text("Price"))
-                    .accessibility(hint: Text("Rs. \(course.price)"))
+//                    .accessibility(label: Text("Price"))
+//                    .accessibility(hint: Text("Rs. \(course.price)"))
             }
             HStack {
                 Text("\(course.lessons) Lessons")
                     .font(.caption)
-                    .accessibility(label: Text("Lessons"))
-                    .accessibility(hint: Text("\(course.lessons) Lessons"))
+//                    .accessibility(label: Text("Lessons"))
+//                    .accessibility(hint: Text("\(course.lessons) Lessons"))
                 Spacer()
                 Text("★ \(course.averageRating, specifier: "%.1f")")
                     .font(.caption)
                     .foregroundColor(.yellow)
-                    .accessibility(label: Text("Rating"))
-                    .accessibility(hint: Text("Rating \(course.averageRating, specifier: "%.1f") stars"))
+//                    .accessibility(label: Text("Rating"))
+//                    .accessibility(hint: Text("Rating \(course.averageRating, specifier: "%.1f") stars"))
             }
             
         }
@@ -541,14 +543,14 @@ struct CourseDetailsView: View {
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .accessibility(label: Text("Course Image"))
-                    .accessibility(hint: Text("Image of the course"))
+//                    .accessibility(label: Text("Course Image"))
+//                    .accessibility(hint: Text("Image of the course"))
             } placeholder: {
                 Image(systemName: "photo")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .accessibility(label: Text("Placeholder Image"))
-                    .accessibility(hint: Text("Placeholder image for course"))
+//                    .accessibility(label: Text("Placeholder Image"))
+//                    .accessibility(hint: Text("Placeholder image for course"))
             }
             .frame(height: 200)
             .clipped()
@@ -556,23 +558,23 @@ struct CourseDetailsView: View {
             Text(course.name)
                 .font(.title)
                 .fontWeight(.bold)
-                .accessibility(label: Text(course.name))
-                .accessibility(hint: Text("Name of the course"))
+//                .accessibility(label: Text(course.name))
+//                .accessibility(hint: Text("Name of the course"))
             
             Text(course.description)
                 .font(.body)
-                .accessibility(label: Text("Description"))
-                .accessibility(hint: Text(course.description))
+//                .accessibility(label: Text("Description"))
+//                .accessibility(hint: Text(course.description))
             
             
             HStack {
                 Text("Duration: \(course.duration)")
-                    .accessibility(label: Text("Duration"))
-                    .accessibility(hint: Text(course.duration))
+//                    .accessibility(label: Text("Duration"))
+//                    .accessibility(hint: Text(course.duration))
                 Spacer()
                 Text("Language: \(course.language)")
-                    .accessibility(label: Text("Language"))
-                    .accessibility(hint: Text(course.language))
+//                    .accessibility(label: Text("Language"))
+//                    .accessibility(hint: Text(course.language))
             }
             
             Spacer()

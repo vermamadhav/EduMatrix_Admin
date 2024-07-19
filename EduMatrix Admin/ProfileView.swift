@@ -181,7 +181,12 @@ struct PersonalInformationView: View {
     @State private var isImagePickerPresented = false
     @State private var nameError: String?
     @State private var isCamera = false
+    @State private var showAlert = false
     @Environment(\.presentationMode) var presentationMode
+    
+    var isSaveButtonDisabled: Bool {
+        userProfile.name.isEmpty || userProfile.username.isEmpty || userProfile.pronouns.isEmpty || userProfile.password.isEmpty || userProfile.phoneNumber.isEmpty || userProfile.gender.isEmpty
+    }
     
     var body: some View {
         ScrollView {
@@ -213,46 +218,31 @@ struct PersonalInformationView: View {
                     }
                     
                     TextField("Name", text: $userProfile.name)
-                                            .font(.title)
-                                            .fontWeight(.bold)
-                                            .multilineTextAlignment(.center)
-                                            .padding()
-                                            .accessibility(label: Text("Name"))
-                                            .accessibility(hint: Text("Enter your name"))
-                                            .onChange(of: userProfile.name) { newValue in
-                                                validateName()
-                                            }
-                                            .onSubmit {
-                                                validateName()
-                                            }
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .multilineTextAlignment(.center)
+                        .padding()
+                        .accessibility(label: Text("Name"))
+                        .accessibility(hint: Text("Enter your name"))
+                        .onChange(of: userProfile.name) { newValue in
+                            validateName()
+                        }
+                        .onSubmit {
+                            validateName()
+                        }
 
-                                        if let nameError = nameError {
-                                            Text(nameError)
-                                                .foregroundColor(.red)
-                                                .font(.caption)
-                                                .accessibility(label: Text("Name Error"))
-                                                .accessibility(hint: Text(nameError))
-                                        }
-                   // .offset(x: -10, y: -10).padding(.leading,245).padding(.top,-42)
-                    
-                    
-                    
-//                    .onChange(of: userProfile.name) { newValue in
-//                        validateName()
-//                    }
-//                    .onSubmit {
-//                        validateName()
-//                    }
-                    
-//                    if let nameError = nameError {
-//                        Text(nameError)
-//                            .foregroundColor(.red)
-//                            .font(.caption)
-//                    }
+                    if let nameError = nameError {
+                        Text(nameError)
+                            .foregroundColor(.red)
+                            .font(.caption)
+                            .accessibility(label: Text("Name Error"))
+                            .accessibility(hint: Text(nameError))
+                    }
                     
                     Text("Admin")
                         .font(.subheadline)
-                        .foregroundColor(.gray).padding(.top,-25)
+                        .foregroundColor(.gray)
+                        .padding(.top, -25)
                 }
                 .padding(.top, -70)
                 
@@ -273,22 +263,33 @@ struct PersonalInformationView: View {
                     .accessibility(hint: Text("Enter your gender"))
                 
                 Button(action: {
-                                    // Save action
-                                    self.presentationMode.wrappedValue.dismiss()
-                                }) {
-                                    Text("Save")
-                                        .font(.headline)
-                                        .padding()
-                                        .frame(maxWidth: .infinity)
-                                        .background(Color.blue)
-                                        .foregroundColor(.white)
-                                        .cornerRadius(10)
-                                        .accessibility(label: Text("Save Button"))
-                                        .accessibility(hint: Text("Tap to save your changes"))
-                                    
-                                }
-                                .padding(.top, 20)
-                                .keyboardShortcut(.defaultAction)
+                    if isSaveButtonDisabled {
+                        showAlert = true
+                    } else {
+                        // Save action
+                        self.presentationMode.wrappedValue.dismiss()
+                    }
+                }) {
+                    Text("Save")
+                        .font(.headline)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(isSaveButtonDisabled ? Color.gray : Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .accessibility(label: Text("Save Button"))
+                        .accessibility(hint: Text("Tap to save your changes"))
+                }
+                .disabled(isSaveButtonDisabled)
+                .alert(isPresented: $showAlert) {
+                    Alert(
+                        title: Text("Incomplete Information"),
+                        message: Text("Please fill all the fields before saving."),
+                        dismissButton: .default(Text("OK"))
+                    )
+                }
+                .padding(.top, 20)
+                .keyboardShortcut(.defaultAction)
                 
                 Spacer()
             }
@@ -334,6 +335,7 @@ struct FormField: View {
         }
     }
 }
+
 
 struct ImagePicker: UIViewControllerRepresentable {
     @Binding var profileImage: UIImage?
