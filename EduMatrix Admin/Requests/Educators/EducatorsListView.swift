@@ -2,7 +2,7 @@ import SwiftUI
 
 struct EducatorsListView: View {
     @State private var searchText = ""
-    var educators: [Educator]
+    @Binding  var educators: [Educator]
     
     var filteredEducators: [Educator] {
         if searchText.isEmpty {
@@ -25,18 +25,22 @@ struct EducatorsListView: View {
             .padding(.top)
             
             
-                ScrollView {
-                    LazyVStack {
-                        ForEach(filteredEducators) { educator in
-                            NavigationLink(destination: EducatorDetailView(educator: educator)) {
-                                EducatorRow(educator: educator)
-                            }
-                            .listRowBackground(Color.clear) // To make the row background clear
-                            .buttonStyle(PlainButtonStyle())
+            ScrollView {
+                LazyVStack {
+                    ForEach(filteredEducators) { educator in
+                        NavigationLink(destination: EducatorDetailView(educator: educator)) {
+                            EducatorCardView(educator: educator, onUpdate: { updatedEducator in
+                                if let index = educators.firstIndex(where: { $0.id == updatedEducator.id }) {
+                                    educators.remove(at: index)
+                                }
+                            })
                         }
+                        .listRowBackground(Color.clear) // To make the row background clear
+                        .buttonStyle(PlainButtonStyle())
                     }
                 }
-                
+            }
+            
             
             .padding() // To remove default separators and padding
             Spacer()
@@ -83,8 +87,8 @@ struct EducatorRow: View {
     }
 }
 
-struct EducatorsListView_Previews: PreviewProvider {
-    static var previews: some View {
-        EducatorsListView(educators: sampleEducators)
-    }
-}
+//struct EducatorsListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        EducatorsListView(educators: sampleEducators)
+//    }
+//}

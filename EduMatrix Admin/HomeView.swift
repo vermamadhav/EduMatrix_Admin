@@ -344,7 +344,7 @@ struct EducatorsView: View {
                   //  .accessibility(label: Text("Educators"))
                   //  .accessibility(hint: Text("List of educators"))
                 Spacer()
-                NavigationLink(destination: EducatorsListView(educators: educatorsList)) {
+                NavigationLink(destination: EducatorsListView(educators: $educatorsList)) {
                     Text("See All")
                         .font(.subheadline)
                         .foregroundColor(.blue)

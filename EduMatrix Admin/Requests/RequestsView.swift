@@ -21,7 +21,7 @@ struct RequestsView: View {
                 
                 if selectedSegment == 0 {
                                       // EducatorsListView(educators: educators, onApprove: approveEducator, onReject: rejectEducator)
-                    EducatorsListView(educators: educators)
+                    EducatorsListView(educators: $educators)
                 } else {
                     CoursesView(courses: $courses)
                 }
