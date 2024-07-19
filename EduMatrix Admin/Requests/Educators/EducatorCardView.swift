@@ -55,11 +55,15 @@ struct EducatorCardView: View {
                         Alert(
                             title: Text("Confirmation"),
                             message: Text("Do you want to accept the educator onboarding request?"),
-                            primaryButton: .default(Text("Yes")) {
+                            primaryButton: .default(Text("No")) ,
+//                            {
+//                                print("Accepted")
+//                                approveEducator()
+//                            },
+                            secondaryButton: .cancel(Text("Yes")){
                                 print("Accepted")
                                 approveEducator()
-                            },
-                            secondaryButton: .cancel(Text("No"))
+                            }
                         )
                     }
 
@@ -77,11 +81,11 @@ struct EducatorCardView: View {
                         Alert(
                             title: Text("Rejection"),
                             message: Text("Do you want to reject the educator onboarding request?"),
-                            primaryButton: .default(Text("Yes")) {
+                            primaryButton: .default(Text("No")),
+                            secondaryButton: .cancel(Text("Yes")){
                                 print("Rejected")
                                 rejectEducator()
-                            },
-                            secondaryButton: .cancel(Text("No"))
+                            }
                         )
                     }
                 }

@@ -60,11 +60,11 @@ struct CourseCardView: View {
                     Alert(
                         title: Text("Confirmation"),
                         message: Text("Do you want to approve the course request?"),
-                        primaryButton: .default(Text("Yes")) {
+                        primaryButton: .default(Text("No")),
+                        secondaryButton: .cancel(Text("Yes")){
                             print("approved")
                             approveCourse()
-                        },
-                        secondaryButton: .cancel(Text("No"))
+                        }
                     )
                 }
                 .padding(.bottom, 5)
@@ -85,11 +85,11 @@ struct CourseCardView: View {
                     Alert(
                         title: Text("Rejection"),
                         message: Text("Do you want to reject the course request?"),
-                        primaryButton: .default(Text("Yes")) {
+                        primaryButton: .default(Text("Yes")),
+                        secondaryButton: .cancel(Text("No")){
                             print("Rejected")
                             rejectCourse()
-                        },
-                        secondaryButton: .cancel(Text("No"))
+                        }
                     )
                 }
                 .padding(.bottom, 5)
